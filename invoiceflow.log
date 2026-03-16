@@ -1,0 +1,224 @@
+2026-03-16 16:19:44,917 [INFO] Database initialized
+2026-03-16 16:19:44,917 [INFO] InvoiceFlow starting — Business: AR Productions
+2026-03-16 16:19:44,917 [INFO] Gmail: OK | Gemini: OK
+2026-03-16 16:19:44,924 [INFO] [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5001
+2026-03-16 16:19:44,924 [INFO] [33mPress CTRL+C to quit[0m
+2026-03-16 16:19:57,349 [INFO] 127.0.0.1 - - [16/Mar/2026 16:19:57] "[33mGET / HTTP/1.1[0m" 404 -
+2026-03-16 16:20:13,887 [INFO] 127.0.0.1 - - [16/Mar/2026 16:20:13] "[33mGET / HTTP/1.1[0m" 404 -
+2026-03-16 16:20:14,588 [INFO] 127.0.0.1 - - [16/Mar/2026 16:20:14] "[33mGET / HTTP/1.1[0m" 404 -
+2026-03-16 16:20:14,929 [INFO] 127.0.0.1 - - [16/Mar/2026 16:20:14] "[33mGET / HTTP/1.1[0m" 404 -
+2026-03-16 16:20:15,302 [INFO] 127.0.0.1 - - [16/Mar/2026 16:20:15] "[33mGET / HTTP/1.1[0m" 404 -
+2026-03-16 16:21:57,313 [INFO] Database initialized
+2026-03-16 16:21:57,313 [INFO] InvoiceFlow starting — Business: AR Productions
+2026-03-16 16:21:57,314 [INFO] Gmail: OK | Gemini: OK
+2026-03-16 16:21:57,317 [INFO] [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5001
+2026-03-16 16:21:57,318 [INFO] [33mPress CTRL+C to quit[0m
+2026-03-16 16:22:07,210 [INFO] Database initialized
+2026-03-16 16:22:07,210 [INFO] InvoiceFlow starting — Business: AR Productions
+2026-03-16 16:22:07,210 [INFO] Gmail: OK | Gemini: OK
+2026-03-16 16:22:07,213 [INFO] [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5001
+2026-03-16 16:22:07,213 [INFO] [33mPress CTRL+C to quit[0m
+2026-03-16 16:22:24,808 [INFO] 127.0.0.1 - - [16/Mar/2026 16:22:24] "[33mGET / HTTP/1.1[0m" 404 -
+2026-03-16 16:25:51,751 [INFO] Database initialized
+2026-03-16 16:25:51,752 [INFO] InvoiceFlow starting — Business: AR Productions
+2026-03-16 16:25:51,752 [INFO] Gmail: OK | Gemini: OK
+2026-03-16 16:25:51,757 [INFO] [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5001
+2026-03-16 16:25:51,757 [INFO] [33mPress CTRL+C to quit[0m
+2026-03-16 16:26:02,469 [INFO] 127.0.0.1 - - [16/Mar/2026 16:26:02] "GET / HTTP/1.1" 200 -
+2026-03-16 16:26:11,255 [INFO] 127.0.0.1 - - [16/Mar/2026 16:26:11] "[36mGET / HTTP/1.1[0m" 304 -
+2026-03-16 16:26:11,967 [INFO] 127.0.0.1 - - [16/Mar/2026 16:26:11] "[36mGET / HTTP/1.1[0m" 304 -
+2026-03-16 16:26:12,568 [INFO] 127.0.0.1 - - [16/Mar/2026 16:26:12] "[36mGET / HTTP/1.1[0m" 304 -
+2026-03-16 16:27:04,283 [INFO] Database initialized
+2026-03-16 16:27:04,283 [INFO] InvoiceFlow starting — Business: AR Productions
+2026-03-16 16:27:04,283 [INFO] Gmail: OK | Gemini: OK
+2026-03-16 16:27:04,286 [INFO] [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5001
+2026-03-16 16:27:04,286 [INFO] [33mPress CTRL+C to quit[0m
+2026-03-16 16:27:10,049 [INFO] 127.0.0.1 - - [16/Mar/2026 16:27:10] "[36mGET / HTTP/1.1[0m" 304 -
+2026-03-16 16:27:11,148 [INFO] 127.0.0.1 - - [16/Mar/2026 16:27:11] "[36mGET / HTTP/1.1[0m" 304 -
+2026-03-16 16:27:12,017 [INFO] 127.0.0.1 - - [16/Mar/2026 16:27:12] "[36mGET / HTTP/1.1[0m" 304 -
+2026-03-16 16:27:26,716 [INFO] 127.0.0.1 - - [16/Mar/2026 16:27:26] "[36mGET / HTTP/1.1[0m" 304 -
+2026-03-16 16:28:37,039 [INFO] Database initialized
+2026-03-16 16:28:37,040 [INFO] InvoiceFlow starting — Business: AR Productions
+2026-03-16 16:28:37,040 [INFO] Gmail: OK | Gemini: OK
+2026-03-16 16:28:37,044 [INFO] [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5001
+2026-03-16 16:28:37,045 [INFO] [33mPress CTRL+C to quit[0m
+2026-03-16 16:28:42,279 [INFO] 127.0.0.1 - - [16/Mar/2026 16:28:42] "[36mGET / HTTP/1.1[0m" 304 -
+2026-03-16 16:28:43,164 [INFO] 127.0.0.1 - - [16/Mar/2026 16:28:43] "[36mGET / HTTP/1.1[0m" 304 -
+2026-03-16 16:28:43,549 [INFO] 127.0.0.1 - - [16/Mar/2026 16:28:43] "[36mGET / HTTP/1.1[0m" 304 -
+2026-03-16 16:28:43,779 [INFO] 127.0.0.1 - - [16/Mar/2026 16:28:43] "[36mGET / HTTP/1.1[0m" 304 -
+2026-03-16 16:28:43,956 [INFO] 127.0.0.1 - - [16/Mar/2026 16:28:43] "[36mGET / HTTP/1.1[0m" 304 -
+2026-03-16 16:28:44,123 [INFO] 127.0.0.1 - - [16/Mar/2026 16:28:44] "[36mGET / HTTP/1.1[0m" 304 -
+2026-03-16 16:28:44,291 [INFO] 127.0.0.1 - - [16/Mar/2026 16:28:44] "[36mGET / HTTP/1.1[0m" 304 -
+2026-03-16 16:28:44,459 [INFO] 127.0.0.1 - - [16/Mar/2026 16:28:44] "[36mGET / HTTP/1.1[0m" 304 -
+2026-03-16 16:28:44,627 [INFO] 127.0.0.1 - - [16/Mar/2026 16:28:44] "[36mGET / HTTP/1.1[0m" 304 -
+2026-03-16 16:28:44,779 [INFO] 127.0.0.1 - - [16/Mar/2026 16:28:44] "[36mGET / HTTP/1.1[0m" 304 -
+2026-03-16 16:28:44,963 [INFO] 127.0.0.1 - - [16/Mar/2026 16:28:44] "[36mGET / HTTP/1.1[0m" 304 -
+2026-03-16 16:28:53,958 [INFO] 127.0.0.1 - - [16/Mar/2026 16:28:53] "[36mGET / HTTP/1.1[0m" 304 -
+2026-03-16 16:30:01,458 [INFO] Database initialized
+2026-03-16 16:30:01,459 [INFO] InvoiceFlow starting — Business: AR Productions
+2026-03-16 16:30:01,460 [INFO] Gmail: OK | Gemini: OK
+2026-03-16 16:30:01,464 [INFO] [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5001
+2026-03-16 16:30:01,465 [INFO] [33mPress CTRL+C to quit[0m
+2026-03-16 16:30:03,030 [INFO] 127.0.0.1 - - [16/Mar/2026 16:30:03] "[36mGET / HTTP/1.1[0m" 304 -
+2026-03-16 16:30:03,754 [INFO] 127.0.0.1 - - [16/Mar/2026 16:30:03] "[36mGET / HTTP/1.1[0m" 304 -
+2026-03-16 16:30:04,260 [INFO] 127.0.0.1 - - [16/Mar/2026 16:30:04] "[36mGET / HTTP/1.1[0m" 304 -
+2026-03-16 16:30:04,636 [INFO] 127.0.0.1 - - [16/Mar/2026 16:30:04] "[36mGET / HTTP/1.1[0m" 304 -
+2026-03-16 16:30:04,869 [INFO] 127.0.0.1 - - [16/Mar/2026 16:30:04] "[36mGET / HTTP/1.1[0m" 304 -
+2026-03-16 16:30:05,034 [INFO] 127.0.0.1 - - [16/Mar/2026 16:30:05] "[36mGET / HTTP/1.1[0m" 304 -
+2026-03-16 16:30:05,196 [INFO] 127.0.0.1 - - [16/Mar/2026 16:30:05] "[36mGET / HTTP/1.1[0m" 304 -
+2026-03-16 16:30:05,350 [INFO] 127.0.0.1 - - [16/Mar/2026 16:30:05] "[36mGET / HTTP/1.1[0m" 304 -
+2026-03-16 16:30:05,522 [INFO] 127.0.0.1 - - [16/Mar/2026 16:30:05] "[36mGET / HTTP/1.1[0m" 304 -
+2026-03-16 16:30:05,685 [INFO] 127.0.0.1 - - [16/Mar/2026 16:30:05] "[36mGET / HTTP/1.1[0m" 304 -
+2026-03-16 16:30:57,209 [INFO] Database initialized
+2026-03-16 16:30:57,209 [INFO] InvoiceFlow starting — Business: AR Productions
+2026-03-16 16:30:57,210 [INFO] Gmail: OK | Gemini: OK
+2026-03-16 16:30:57,212 [INFO] [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5001
+2026-03-16 16:30:57,213 [INFO] [33mPress CTRL+C to quit[0m
+2026-03-16 16:31:06,204 [INFO] 127.0.0.1 - - [16/Mar/2026 16:31:06] "[36mGET / HTTP/1.1[0m" 304 -
+2026-03-16 16:33:13,556 [INFO] Database initialized
+2026-03-16 16:33:13,556 [INFO] InvoiceFlow starting — Business: AR Productions
+2026-03-16 16:33:13,556 [INFO] Gmail: OK | Gemini: OK
+2026-03-16 16:33:13,560 [INFO] [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5001
+2026-03-16 16:33:13,560 [INFO] [33mPress CTRL+C to quit[0m
+2026-03-16 16:33:19,765 [INFO] 127.0.0.1 - - [16/Mar/2026 16:33:19] "[33mGET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1[0m" 404 -
+2026-03-16 16:34:57,947 [INFO] 127.0.0.1 - - [16/Mar/2026 16:34:57] "GET / HTTP/1.1" 200 -
+2026-03-16 16:34:57,999 [INFO] 127.0.0.1 - - [16/Mar/2026 16:34:57] "[33mGET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1[0m" 404 -
+2026-03-16 16:34:58,342 [INFO] 127.0.0.1 - - [16/Mar/2026 16:34:58] "GET /api/config HTTP/1.1" 200 -
+2026-03-16 16:34:58,391 [INFO] 127.0.0.1 - - [16/Mar/2026 16:34:58] "GET /api/stats HTTP/1.1" 200 -
+2026-03-16 16:34:58,394 [INFO] 127.0.0.1 - - [16/Mar/2026 16:34:58] "GET /api/invoices?status=&q= HTTP/1.1" 200 -
+2026-03-16 16:34:58,402 [INFO] 127.0.0.1 - - [16/Mar/2026 16:34:58] "GET /api/clients HTTP/1.1" 200 -
+2026-03-16 16:35:07,648 [INFO] 127.0.0.1 - - [16/Mar/2026 16:35:07] "GET /new HTTP/1.1" 200 -
+2026-03-16 16:35:07,681 [INFO] 127.0.0.1 - - [16/Mar/2026 16:35:07] "GET /api/config HTTP/1.1" 200 -
+2026-03-16 16:35:10,991 [INFO] 127.0.0.1 - - [16/Mar/2026 16:35:10] "[36mGET / HTTP/1.1[0m" 304 -
+2026-03-16 16:35:11,030 [INFO] 127.0.0.1 - - [16/Mar/2026 16:35:11] "GET /api/config HTTP/1.1" 200 -
+2026-03-16 16:35:11,068 [INFO] 127.0.0.1 - - [16/Mar/2026 16:35:11] "GET /api/stats HTTP/1.1" 200 -
+2026-03-16 16:35:11,069 [INFO] 127.0.0.1 - - [16/Mar/2026 16:35:11] "GET /api/invoices?status=&q= HTTP/1.1" 200 -
+2026-03-16 16:35:11,073 [INFO] 127.0.0.1 - - [16/Mar/2026 16:35:11] "GET /api/clients HTTP/1.1" 200 -
+2026-03-16 16:35:22,590 [INFO] 127.0.0.1 - - [16/Mar/2026 16:35:22] "[36mGET /new HTTP/1.1[0m" 304 -
+2026-03-16 16:35:22,634 [INFO] 127.0.0.1 - - [16/Mar/2026 16:35:22] "GET /api/config HTTP/1.1" 200 -
+2026-03-16 16:35:26,778 [INFO] 127.0.0.1 - - [16/Mar/2026 16:35:26] "GET /api/clients/search?q=Ali%20 HTTP/1.1" 200 -
+2026-03-16 16:35:27,250 [INFO] 127.0.0.1 - - [16/Mar/2026 16:35:27] "GET /api/clients/search?q=Ali%20R HTTP/1.1" 200 -
+2026-03-16 16:35:28,169 [INFO] 127.0.0.1 - - [16/Mar/2026 16:35:28] "GET /api/clients/search?q=Ali%20Ra HTTP/1.1" 200 -
+2026-03-16 16:35:28,426 [INFO] 127.0.0.1 - - [16/Mar/2026 16:35:28] "GET /api/clients/search?q=Ali%20Raz HTTP/1.1" 200 -
+2026-03-16 16:35:28,691 [INFO] 127.0.0.1 - - [16/Mar/2026 16:35:28] "GET /api/clients/search?q=Ali%20Raza HTTP/1.1" 200 -
+2026-03-16 16:37:52,534 [INFO] Email sent to estateio.contact@gmail.com for INV-2026-001
+2026-03-16 16:37:52,540 [INFO] 127.0.0.1 - - [16/Mar/2026 16:37:52] "POST /api/generate-invoice HTTP/1.1" 200 -
+2026-03-16 16:37:56,620 [INFO] 127.0.0.1 - - [16/Mar/2026 16:37:56] "GET /invoices/INV-2026-001.pdf HTTP/1.1" 200 -
+2026-03-16 16:38:38,813 [INFO] 127.0.0.1 - - [16/Mar/2026 16:38:38] "[36mGET / HTTP/1.1[0m" 304 -
+2026-03-16 16:38:38,859 [INFO] 127.0.0.1 - - [16/Mar/2026 16:38:38] "GET /api/config HTTP/1.1" 200 -
+2026-03-16 16:38:38,888 [INFO] 127.0.0.1 - - [16/Mar/2026 16:38:38] "GET /api/stats HTTP/1.1" 200 -
+2026-03-16 16:38:38,889 [INFO] 127.0.0.1 - - [16/Mar/2026 16:38:38] "GET /api/clients HTTP/1.1" 200 -
+2026-03-16 16:38:38,890 [INFO] 127.0.0.1 - - [16/Mar/2026 16:38:38] "GET /api/invoices?status=&q= HTTP/1.1" 200 -
+2026-03-16 16:38:58,637 [INFO] 127.0.0.1 - - [16/Mar/2026 16:38:58] "GET /api/invoices?status=&q=a HTTP/1.1" 200 -
+2026-03-16 16:38:59,515 [INFO] 127.0.0.1 - - [16/Mar/2026 16:38:59] "GET /api/invoices?status=&q=al HTTP/1.1" 200 -
+2026-03-16 16:38:59,755 [INFO] 127.0.0.1 - - [16/Mar/2026 16:38:59] "GET /api/invoices?status=&q=ali HTTP/1.1" 200 -
+2026-03-16 16:38:59,954 [INFO] 127.0.0.1 - - [16/Mar/2026 16:38:59] "GET /api/invoices?status=&q=ali HTTP/1.1" 200 -
+2026-03-16 16:39:00,161 [INFO] 127.0.0.1 - - [16/Mar/2026 16:39:00] "GET /api/invoices?status=&q=ali%20r HTTP/1.1" 200 -
+2026-03-16 16:39:00,306 [INFO] 127.0.0.1 - - [16/Mar/2026 16:39:00] "GET /api/invoices?status=&q=ali%20ra HTTP/1.1" 200 -
+2026-03-16 16:39:00,466 [INFO] 127.0.0.1 - - [16/Mar/2026 16:39:00] "GET /api/invoices?status=&q=ali%20raz HTTP/1.1" 200 -
+2026-03-16 16:39:00,642 [INFO] 127.0.0.1 - - [16/Mar/2026 16:39:00] "GET /api/invoices?status=&q=ali%20raza HTTP/1.1" 200 -
+2026-03-16 16:39:00,794 [INFO] 127.0.0.1 - - [16/Mar/2026 16:39:00] "GET /api/invoices?status=&q=ali%20razaa HTTP/1.1" 200 -
+2026-03-16 16:39:00,987 [INFO] 127.0.0.1 - - [16/Mar/2026 16:39:00] "GET /api/invoices?status=&q=ali%20razaaa HTTP/1.1" 200 -
+2026-03-16 16:39:01,163 [INFO] 127.0.0.1 - - [16/Mar/2026 16:39:01] "GET /api/invoices?status=&q=ali%20razaaaa HTTP/1.1" 200 -
+2026-03-16 16:39:01,483 [INFO] 127.0.0.1 - - [16/Mar/2026 16:39:01] "GET /api/invoices?status=&q=ali%20razaaa HTTP/1.1" 200 -
+2026-03-16 16:39:01,643 [INFO] 127.0.0.1 - - [16/Mar/2026 16:39:01] "GET /api/invoices?status=&q=ali%20razaa HTTP/1.1" 200 -
+2026-03-16 16:39:01,778 [INFO] 127.0.0.1 - - [16/Mar/2026 16:39:01] "GET /api/invoices?status=&q=ali%20raza HTTP/1.1" 200 -
+2026-03-16 16:39:01,905 [INFO] 127.0.0.1 - - [16/Mar/2026 16:39:01] "GET /api/invoices?status=&q=ali%20raz HTTP/1.1" 200 -
+2026-03-16 16:39:02,457 [INFO] 127.0.0.1 - - [16/Mar/2026 16:39:02] "GET /api/invoices?status=&q=ali%20raza HTTP/1.1" 200 -
+2026-03-16 16:40:43,303 [INFO] 127.0.0.1 - - [16/Mar/2026 16:40:43] "PATCH /api/invoices/INV-2026-001/status HTTP/1.1" 200 -
+2026-03-16 16:40:43,309 [INFO] 127.0.0.1 - - [16/Mar/2026 16:40:43] "GET /api/invoices?status=&q=ali%20raza HTTP/1.1" 200 -
+2026-03-16 16:40:43,312 [INFO] 127.0.0.1 - - [16/Mar/2026 16:40:43] "GET /api/stats HTTP/1.1" 200 -
+2026-03-16 16:40:47,494 [INFO] 127.0.0.1 - - [16/Mar/2026 16:40:47] "[36mGET /invoices/INV-2026-001.pdf HTTP/1.1[0m" 304 -
+2026-03-16 16:40:58,237 [INFO] 127.0.0.1 - - [16/Mar/2026 16:40:58] "GET /api/invoices?status=&q=ali HTTP/1.1" 200 -
+2026-03-16 16:40:58,348 [INFO] 127.0.0.1 - - [16/Mar/2026 16:40:58] "GET /api/invoices?status=&q=ali HTTP/1.1" 200 -
+2026-03-16 16:40:58,508 [INFO] 127.0.0.1 - - [16/Mar/2026 16:40:58] "GET /api/invoices?status=&q=al HTTP/1.1" 200 -
+2026-03-16 16:40:58,653 [INFO] 127.0.0.1 - - [16/Mar/2026 16:40:58] "GET /api/invoices?status=&q=a HTTP/1.1" 200 -
+2026-03-16 16:40:59,341 [INFO] 127.0.0.1 - - [16/Mar/2026 16:40:59] "GET /api/invoices?status=&q= HTTP/1.1" 200 -
+2026-03-16 16:47:05,101 [INFO] Database initialized
+2026-03-16 16:47:05,101 [INFO] InvoiceFlow starting — Business: AR Productions
+2026-03-16 16:47:05,101 [INFO] Gmail: OK | Gemini: OK
+2026-03-16 16:47:05,104 [INFO] [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5001
+2026-03-16 16:47:05,104 [INFO] [33mPress CTRL+C to quit[0m
+2026-03-16 16:47:21,073 [INFO] 127.0.0.1 - - [16/Mar/2026 16:47:21] "GET / HTTP/1.1" 200 -
+2026-03-16 16:47:22,695 [INFO] 127.0.0.1 - - [16/Mar/2026 16:47:22] "GET /api/config HTTP/1.1" 200 -
+2026-03-16 16:47:23,040 [INFO] 127.0.0.1 - - [16/Mar/2026 16:47:23] "[33mGET /favicon.ico HTTP/1.1[0m" 404 -
+2026-03-16 16:47:23,334 [INFO] 127.0.0.1 - - [16/Mar/2026 16:47:23] "GET /api/clients HTTP/1.1" 200 -
+2026-03-16 16:47:23,334 [INFO] 127.0.0.1 - - [16/Mar/2026 16:47:23] "GET /api/invoices?status=&q= HTTP/1.1" 200 -
+2026-03-16 16:47:23,336 [INFO] 127.0.0.1 - - [16/Mar/2026 16:47:23] "GET /api/stats HTTP/1.1" 200 -
+2026-03-16 16:47:43,631 [INFO] 127.0.0.1 - - [16/Mar/2026 16:47:43] "GET /new HTTP/1.1" 200 -
+2026-03-16 16:47:44,724 [INFO] 127.0.0.1 - - [16/Mar/2026 16:47:44] "GET /api/config HTTP/1.1" 200 -
+2026-03-16 16:47:52,577 [INFO] 127.0.0.1 - - [16/Mar/2026 16:47:52] "GET /api/clients/search?q=ah HTTP/1.1" 200 -
+2026-03-16 16:47:53,237 [INFO] 127.0.0.1 - - [16/Mar/2026 16:47:53] "GET /api/clients/search?q=ahmad HTTP/1.1" 200 -
+2026-03-16 16:49:33,501 [INFO] Email sent to alirazaaa9980@gmail.com for INV-2026-002
+2026-03-16 16:49:33,509 [INFO] 127.0.0.1 - - [16/Mar/2026 16:49:33] "POST /api/generate-invoice HTTP/1.1" 200 -
+2026-03-16 16:50:12,047 [INFO] 127.0.0.1 - - [16/Mar/2026 16:50:12] "[36mGET / HTTP/1.1[0m" 304 -
+2026-03-16 16:50:12,718 [INFO] 127.0.0.1 - - [16/Mar/2026 16:50:12] "GET /api/config HTTP/1.1" 200 -
+2026-03-16 16:50:13,351 [INFO] 127.0.0.1 - - [16/Mar/2026 16:50:13] "GET /api/invoices?status=&q= HTTP/1.1" 200 -
+2026-03-16 16:50:13,356 [INFO] 127.0.0.1 - - [16/Mar/2026 16:50:13] "GET /api/clients HTTP/1.1" 200 -
+2026-03-16 16:50:13,495 [INFO] 127.0.0.1 - - [16/Mar/2026 16:50:13] "GET /api/stats HTTP/1.1" 200 -
+2026-03-16 16:50:16,813 [INFO] 127.0.0.1 - - [16/Mar/2026 16:50:16] "GET /api/invoices?status=SENT&q= HTTP/1.1" 200 -
+2026-03-16 16:50:17,648 [INFO] 127.0.0.1 - - [16/Mar/2026 16:50:17] "GET /api/invoices?status=PAID&q= HTTP/1.1" 200 -
+2026-03-16 16:50:18,993 [INFO] 127.0.0.1 - - [16/Mar/2026 16:50:18] "GET /api/invoices?status=overdue&q= HTTP/1.1" 200 -
+2026-03-16 16:50:21,107 [INFO] 127.0.0.1 - - [16/Mar/2026 16:50:21] "GET /api/invoices?status=&q= HTTP/1.1" 200 -
+2026-03-16 16:50:26,289 [INFO] 127.0.0.1 - - [16/Mar/2026 16:50:26] "PATCH /api/invoices/INV-2026-002/status HTTP/1.1" 200 -
+2026-03-16 16:50:26,927 [INFO] 127.0.0.1 - - [16/Mar/2026 16:50:26] "GET /api/invoices?status=&q= HTTP/1.1" 200 -
+2026-03-16 16:50:26,929 [INFO] 127.0.0.1 - - [16/Mar/2026 16:50:26] "GET /api/stats HTTP/1.1" 200 -
+2026-03-16 16:50:32,116 [INFO] 127.0.0.1 - - [16/Mar/2026 16:50:32] "GET /api/invoices?status=SENT&q= HTTP/1.1" 200 -
+2026-03-16 16:50:33,493 [INFO] 127.0.0.1 - - [16/Mar/2026 16:50:33] "GET /api/invoices?status=PAID&q= HTTP/1.1" 200 -
+2026-03-16 16:50:34,254 [INFO] 127.0.0.1 - - [16/Mar/2026 16:50:34] "GET /api/invoices?status=overdue&q= HTTP/1.1" 200 -
+2026-03-16 16:50:37,711 [INFO] 127.0.0.1 - - [16/Mar/2026 16:50:37] "GET /api/invoices?status=&q= HTTP/1.1" 200 -
+2026-03-16 16:50:44,820 [INFO] 127.0.0.1 - - [16/Mar/2026 16:50:44] "PATCH /api/invoices/INV-2026-002/status HTTP/1.1" 200 -
+2026-03-16 16:50:45,456 [INFO] 127.0.0.1 - - [16/Mar/2026 16:50:45] "GET /api/stats HTTP/1.1" 200 -
+2026-03-16 16:50:45,458 [INFO] 127.0.0.1 - - [16/Mar/2026 16:50:45] "GET /api/invoices?status=&q= HTTP/1.1" 200 -
+2026-03-16 16:51:05,924 [INFO] 127.0.0.1 - - [16/Mar/2026 16:51:05] "GET /api/invoices?status=SENT&q= HTTP/1.1" 200 -
+2026-03-16 16:51:07,301 [INFO] 127.0.0.1 - - [16/Mar/2026 16:51:07] "GET /api/invoices?status=PAID&q= HTTP/1.1" 200 -
+2026-03-16 16:51:09,211 [INFO] 127.0.0.1 - - [16/Mar/2026 16:51:09] "GET /api/invoices?status=overdue&q= HTTP/1.1" 200 -
+2026-03-16 16:51:13,410 [INFO] 127.0.0.1 - - [16/Mar/2026 16:51:13] "GET /api/invoices?status=&q= HTTP/1.1" 200 -
+2026-03-16 16:51:15,869 [INFO] 127.0.0.1 - - [16/Mar/2026 16:51:15] "GET /api/invoices/INV-2026-002 HTTP/1.1" 200 -
+2026-03-16 16:51:20,683 [INFO] 127.0.0.1 - - [16/Mar/2026 16:51:20] "PATCH /api/invoices/INV-2026-002/status HTTP/1.1" 200 -
+2026-03-16 16:51:21,321 [INFO] 127.0.0.1 - - [16/Mar/2026 16:51:21] "GET /api/invoices?status=&q= HTTP/1.1" 200 -
+2026-03-16 16:51:21,322 [INFO] 127.0.0.1 - - [16/Mar/2026 16:51:21] "GET /api/stats HTTP/1.1" 200 -
+2026-03-16 16:58:17,396 [INFO] 127.0.0.1 - - [16/Mar/2026 16:58:17] "GET / HTTP/1.1" 200 -
+2026-03-16 16:58:18,273 [INFO] 127.0.0.1 - - [16/Mar/2026 16:58:18] "GET / HTTP/1.1" 200 -
+2026-03-16 16:58:18,518 [INFO] 127.0.0.1 - - [16/Mar/2026 16:58:18] "GET / HTTP/1.1" 200 -
+2026-03-16 16:58:18,973 [INFO] 127.0.0.1 - - [16/Mar/2026 16:58:18] "GET /api/config HTTP/1.1" 200 -
+2026-03-16 16:58:19,342 [INFO] 127.0.0.1 - - [16/Mar/2026 16:58:19] "GET /api/stats HTTP/1.1" 200 -
+2026-03-16 16:58:19,353 [INFO] 127.0.0.1 - - [16/Mar/2026 16:58:19] "GET /api/clients HTTP/1.1" 200 -
+2026-03-16 16:58:19,356 [INFO] 127.0.0.1 - - [16/Mar/2026 16:58:19] "GET /api/invoices?status=&q= HTTP/1.1" 200 -
+2026-03-16 16:58:19,855 [INFO] 127.0.0.1 - - [16/Mar/2026 16:58:19] "GET / HTTP/1.1" 200 -
+2026-03-16 16:58:21,017 [INFO] 127.0.0.1 - - [16/Mar/2026 16:58:21] "GET /api/config HTTP/1.1" 200 -
+2026-03-16 16:58:21,389 [INFO] 127.0.0.1 - - [16/Mar/2026 16:58:21] "[33mGET /favicon.ico HTTP/1.1[0m" 404 -
+2026-03-16 16:58:21,638 [INFO] 127.0.0.1 - - [16/Mar/2026 16:58:21] "GET /api/invoices?status=&q= HTTP/1.1" 200 -
+2026-03-16 16:58:21,641 [INFO] 127.0.0.1 - - [16/Mar/2026 16:58:21] "GET /api/stats HTTP/1.1" 200 -
+2026-03-16 16:58:21,791 [INFO] 127.0.0.1 - - [16/Mar/2026 16:58:21] "GET /api/clients HTTP/1.1" 200 -
+2026-03-16 16:58:30,509 [INFO] 127.0.0.1 - - [16/Mar/2026 16:58:30] "[36mGET / HTTP/1.1[0m" 304 -
+2026-03-16 16:58:31,189 [INFO] 127.0.0.1 - - [16/Mar/2026 16:58:31] "GET /api/config HTTP/1.1" 200 -
+2026-03-16 16:58:31,886 [INFO] 127.0.0.1 - - [16/Mar/2026 16:58:31] "GET /api/clients HTTP/1.1" 200 -
+2026-03-16 16:58:31,889 [INFO] 127.0.0.1 - - [16/Mar/2026 16:58:31] "GET /api/stats HTTP/1.1" 200 -
+2026-03-16 16:58:32,131 [INFO] 127.0.0.1 - - [16/Mar/2026 16:58:32] "GET /api/invoices?status=&q= HTTP/1.1" 200 -
+2026-03-16 17:06:30,584 [INFO] 127.0.0.1 - - [16/Mar/2026 17:06:30] "GET / HTTP/1.1" 200 -
+2026-03-16 17:06:31,697 [INFO] 127.0.0.1 - - [16/Mar/2026 17:06:31] "GET /api/config HTTP/1.1" 200 -
+2026-03-16 17:06:32,343 [INFO] 127.0.0.1 - - [16/Mar/2026 17:06:32] "GET /api/invoices?status=&q= HTTP/1.1" 200 -
+2026-03-16 17:06:32,344 [INFO] 127.0.0.1 - - [16/Mar/2026 17:06:32] "GET /api/clients HTTP/1.1" 200 -
+2026-03-16 17:06:32,345 [INFO] 127.0.0.1 - - [16/Mar/2026 17:06:32] "GET /api/stats HTTP/1.1" 200 -
+2026-03-16 17:06:40,915 [INFO] 127.0.0.1 - - [16/Mar/2026 17:06:40] "GET / HTTP/1.1" 200 -
+2026-03-16 17:06:42,592 [INFO] 127.0.0.1 - - [16/Mar/2026 17:06:42] "GET /api/config HTTP/1.1" 200 -
+2026-03-16 17:06:43,265 [INFO] 127.0.0.1 - - [16/Mar/2026 17:06:43] "GET /api/clients HTTP/1.1" 200 -
+2026-03-16 17:06:43,266 [INFO] 127.0.0.1 - - [16/Mar/2026 17:06:43] "GET /api/stats HTTP/1.1" 200 -
+2026-03-16 17:06:43,530 [INFO] 127.0.0.1 - - [16/Mar/2026 17:06:43] "GET /api/invoices?status=&q= HTTP/1.1" 200 -
+2026-03-16 17:06:58,643 [INFO] 127.0.0.1 - - [16/Mar/2026 17:06:58] "GET /new HTTP/1.1" 200 -
+2026-03-16 17:06:59,748 [INFO] 127.0.0.1 - - [16/Mar/2026 17:06:59] "GET /api/config HTTP/1.1" 200 -
+2026-03-16 17:07:01,219 [INFO] 127.0.0.1 - - [16/Mar/2026 17:07:01] "GET /new HTTP/1.1" 200 -
+2026-03-16 17:07:02,326 [INFO] 127.0.0.1 - - [16/Mar/2026 17:07:02] "GET /new HTTP/1.1" 200 -
+2026-03-16 17:07:02,329 [INFO] 127.0.0.1 - - [16/Mar/2026 17:07:02] "GET /new HTTP/1.1" 200 -
+2026-03-16 17:07:03,038 [INFO] 127.0.0.1 - - [16/Mar/2026 17:07:03] "GET /api/config HTTP/1.1" 200 -

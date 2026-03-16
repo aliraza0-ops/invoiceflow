@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>New Invoice — InvoiceFlow</title>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,300;0,600;0,700;1,300&family=DM+Mono:wght@300;400&display=swap" rel="stylesheet"/>
+<style>
+:root{
+  --bg:#0d0d0d;--s1:#141414;--s2:#1c1c1c;--s3:#242424;
+  --border:#2a2a2a;--border2:#333;
+  --gold:#c9a84c;--gold2:#e8c97a;--gold-dim:rgba(201,168,76,0.12);
+  --green:#52c896;--red:#e05252;--blue:#5299e0;
+  --text:#e8e8e0;--text-dim:#888;--text-dimmer:#444;
+  --shadow:0 2px 20px rgba(0,0,0,0.5);
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{background:var(--bg);color:var(--text);font-family:'DM Mono',monospace;min-height:100vh;}
+
+header{height:56px;background:var(--s1);border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;padding:0 20px;position:sticky;top:0;z-index:10;}
+.hdr-logo{font-family:'Fraunces',serif;font-size:18px;color:var(--gold2);cursor:pointer;}
+.hdr-back{font-size:11px;color:var(--text-dimmer);cursor:pointer;transition:color .15s;}
+.hdr-back:hover{color:var(--gold);}
+
+.page{max-width:900px;margin:0 auto;padding:28px 16px;display:grid;grid-template-columns:1fr 300px;gap:24px;align-items:start;}
+
+.card{background:var(--s1);border:1px solid var(--border);border-radius:16px;padding:24px;}
+.card-title{font-family:'Fraunces',serif;font-size:18px;color:var(--text);margin-bottom:24px;display:flex;align-items:center;gap:10px;}
+.card-title span{font-size:13px;font-family:'DM Mono',monospace;color:var(--text-dimmer);font-weight:300;}
+
+.form-section{margin-bottom:22px;}
+.form-section-label{font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--text-dimmer);margin-bottom:12px;display:flex;align-items:center;gap:8px;}
+.form-section-label::after{content:'';flex:1;height:1px;background:var(--border);}
+
+.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
+.fg-full{grid-column:1/-1;}
+.fg{display:flex;flex-direction:column;gap:6px;}
+label{font-size:9px;letter-spacing:1.5px;text-transform:uppercase;color:var(--text-dimmer);}
+input,textarea,select{
+  background:var(--s2);border:1px solid var(--border);border-radius:8px;
+  padding:10px 12px;font-family:'DM Mono',monospace;font-size:13px;color:var(--text);
+  outline:none;transition:border-color .15s,box-shadow .15s;width:100%;
+  appearance: none;
+  -webkit-appearance:none;
+}
+input:focus,textarea:focus,select:focus{border-color:var(--gold);box-shadow:0 0 0 2px var(--gold-dim);}
+input::placeholder,textarea::placeholder{color:var(--text-dimmer);}
+textarea{resize:vertical;min-height:64px;line-height:1.6;}
+select option{background:var(--s2);}
+
+.autocomplete-wrap{position:relative;}
+.autocomplete-list{position:absolute;top:100%;left:0;right:0;z-index:50;background:var(--s2);border:1px solid var(--border2);border-radius:8px;margin-top:4px;overflow:hidden;box-shadow:var(--shadow);display:none;}
+.autocomplete-list.open{display:block;}
+.ac-item{padding:12px 14px;cursor:pointer;font-size:12px;transition:background .1s;border-bottom:1px solid var(--border);}
+.ac-item:last-child{border-bottom:none;}
+.ac-item:hover,.ac-item:active{background:var(--s3);}
+.ac-name{color:var(--text);}
+.ac-email{font-size:10px;color:var(--text-dimmer);}
+
+.items-list{display:flex;flex-direction:column;gap:10px;margin-bottom:12px;}
+.item-row{background:var(--s2);border:1px solid var(--border);border-radius:10px;padding:14px;}
+.item-grid{display:grid;grid-template-columns:1fr 60px 90px 28px;gap:8px;align-items:end;}
+.remove-item{background:none;border:none;color:var(--text-dimmer);cursor:pointer;font-size:18px;padding:0;line-height:1;transition:color .15s;touch-action:manipulation;}
+.remove-item:hover,.remove-item:active{color:var(--red);}
+.item-total{font-size:10px;color:var(--gold);text-align:right;margin-top:6px;}
+.add-item-btn{background:transparent;border:1px dashed var(--border2);color:var(--text-dimmer);padding:12px;border-radius:8px;font-family:'DM Mono',monospace;font-size:11px;cursor:pointer;width:100%;transition:all .15s;touch-action:manipulation;}
+.add-item-btn:hover,.add-item-btn:active{border-color:var(--gold);color:var(--gold);}
+
+.toggle-row{display:flex;align-items:center;justify-content:space-between;padding:12px 14px;background:var(--s2);border:1px solid var(--border);border-radius:8px;cursor:pointer;touch-action:manipulation;}
+.toggle-row label{cursor:pointer;font-size:13px;color:var(--text-dim);text-transform:none;letter-spacing:0;}
+.toggle{width:40px;height:22px;background:var(--border2);border-radius:11px;position:relative;transition:background .2s;flex-shrink:0;}
+.toggle.on{background:var(--gold);}
+.toggle::after{content:'';position:absolute;width:16px;height:16px;background:white;border-radius:50%;top:3px;left:3px;transition:left .2s;box-shadow:0 1px 3px rgba(0,0,0,0.3);}
+.toggle.on::after{left:21px;}
+
+.submit-btn{width:100%;padding:16px;background:var(--gold);border:none;border-radius:10px;color:#0d0d0d;font-family:'Fraunces',serif;font-size:16px;font-weight:700;cursor:pointer;transition:all .2s;margin-top:8px;display:flex;align-items:center;justify-content:center;gap:10px;touch-action:manipulation;}
+.submit-btn:active{opacity:.85;}
+.submit-btn:disabled{opacity:.5;cursor:not-allowed;}
+.spin{width:16px;height:16px;border:2px solid rgba(0,0,0,.3);border-top-color:#000;border-radius:50%;animation:spin .7s linear infinite;display:none;}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+/* Preview sidebar */
+.preview-card{background:var(--s1);border:1px solid var(--border);border-radius:16px;overflow:hidden;position:sticky;top:76px;}
+.preview-hdr{background:var(--s2);padding:14px 18px;border-bottom:1px solid var(--border);font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--text-dimmer);}
+.preview-body{padding:16px;}
+.prev-row{display:flex;justify-content:space-between;padding:7px 0;border-bottom:1px solid var(--border);font-size:11px;}
+.prev-row:last-child{border-bottom:none;}
+.prev-key{color:var(--text-dimmer);flex-shrink:0;margin-right:8px;}
+.prev-val{color:var(--text);text-align:right;font-size:11px;word-break:break-word;}
+.prev-total{background:var(--gold-dim);border:1px solid rgba(201,168,76,0.2);border-radius:8px;padding:12px 14px;display:flex;justify-content:space-between;align-items:center;margin-top:10px;}
+.prev-total-label{font-size:10px;color:var(--text-dimmer);}
+.prev-total-val{font-family:'Fraunces',serif;font-size:20px;color:var(--gold2);}
+
+/* Mobile preview toggle */
+.preview-toggle{display:none;width:100%;padding:12px;background:var(--s2);border:1px solid var(--border);border-radius:10px;color:var(--text-dim);font-family:'DM Mono',monospace;font-size:12px;cursor:pointer;margin-bottom:16px;text-align:center;}
+
+/* Success */
+.success-overlay{position:fixed;inset:0;background:rgba(0,0,0,.85);backdrop-filter:blur(8px);z-index:200;display:none;align-items:flex-end;justify-content:center;padding:0;}
+.success-overlay.open{display:flex;}
+.success-box{background:var(--s2);border:1px solid var(--border2);border-radius:20px 20px 0 0;padding:32px 24px;width:100%;max-width:500px;text-align:center;}
+.success-icon{font-size:40px;margin-bottom:12px;}
+.success-title{font-family:'Fraunces',serif;font-size:22px;color:var(--green);margin-bottom:6px;}
+.success-sub{font-size:12px;color:var(--text-dimmer);margin-bottom:16px;line-height:1.7;}
+.success-num{font-family:'Fraunces',serif;font-size:16px;color:var(--gold2);margin-bottom:16px;}
+.success-actions{display:flex;gap:10px;margin-bottom:10px;}
+.suc-btn{flex:1;padding:13px;border-radius:8px;font-family:'DM Mono',monospace;font-size:12px;cursor:pointer;border:none;transition:all .15s;touch-action:manipulation;}
+.suc-btn.primary{background:var(--gold);color:#0d0d0d;}
+.suc-btn.secondary{background:var(--s3);border:1px solid var(--border2);color:var(--text-dim);}
+.email-prev{background:var(--s3);border:1px solid var(--border);border-radius:8px;padding:12px;font-size:10px;color:var(--text-dimmer);line-height:1.7;text-align:left;white-space:pre-wrap;margin:10px 0;max-height:80px;overflow-y:auto;}
+
+.toast{position:fixed;bottom:20px;left:16px;right:16px;max-width:400px;margin:0 auto;padding:13px 18px;border-radius:10px;font-size:12px;z-index:999;animation:tIn .25s ease;text-align:center;}
+.toast.ok{background:#0d2010;color:var(--green);border:1px solid rgba(82,200,150,.2);}
+.toast.err{background:#200d0d;color:var(--red);border:1px solid rgba(224,82,82,.2);}
+@keyframes tIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+
+/* ── RESPONSIVE ── */
+@media(max-width:720px){
+  .page{grid-template-columns:1fr;padding:16px 12px;}
+  .preview-card{display:none;position:static;}
+  .preview-card.mobile-open{display:block;}
+  .preview-toggle{display:block;}
+  .form-grid{grid-template-columns:1fr 1fr;}
+  .success-overlay{align-items:flex-end;}
+}
+@media(max-width:480px){
+  .form-grid{grid-template-columns:1fr;}
+  .fg-full{grid-column:1;}
+  .item-grid{grid-template-columns:1fr 50px 80px 28px;}
+  header{padding:0 14px;}
+  .card{padding:18px 14px;}
+}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="hdr-logo" onclick="window.location='/'">InvoiceFlow</div>
+  <div class="hdr-back" onclick="window.location='/'">← Dashboard</div>
+</header>
+
+<div class="page">
+  <div class="card">
+    <div class="card-title">New Invoice <span>AI-powered</span></div>
+
+    <!-- CLIENT -->
+    <div class="form-section">
+      <div class="form-section-label">Client Information</div>
+      <div class="form-grid">
+        <div class="fg autocomplete-wrap fg-full">
+          <label>Client Name</label>
+          <input id="clientName" placeholder="Search or add new client..." autocomplete="off" oninput="searchClients(this.value)"/>
+          <div class="autocomplete-list" id="acList"></div>
+        </div>
+        <div class="fg">
+          <label>Client Email</label>
+          <input type="email" id="clientEmail" placeholder="client@email.com" oninput="updatePreview()"/>
+        </div>
+        <div class="fg">
+          <label>Phone (optional)</label>
+          <input id="clientPhone" placeholder="+92-300-0000000"/>
+        </div>
+      </div>
+    </div>
+
+    <!-- SETTINGS -->
+    <div class="form-section">
+      <div class="form-section-label">Invoice Settings</div>
+      <div class="form-grid">
+        <div class="fg">
+          <label>Currency</label>
+          <select id="currency" onchange="updatePreview()">
+            <option value="PKR">PKR — Rupee</option>
+            <option value="USD">USD — Dollar</option>
+          </select>
+        </div>
+        <div class="fg">
+          <label>Payment Due</label>
+          <select id="dueDays" onchange="updatePreview()">
+            <option value="7">Net 7</option>
+            <option value="15" selected>Net 15</option>
+            <option value="30">Net 30</option>
+            <option value="45">Net 45</option>
+            <option value="60">Net 60</option>
+          </select>
+        </div>
+        <div class="fg fg-full">
+          <div class="toggle-row" onclick="toggleTax()">
+            <label>Add GST 17%</label>
+            <div class="toggle" id="taxToggle"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ITEMS -->
+    <div class="form-section">
+      <div class="form-section-label">Services / Items</div>
+      <div class="items-list" id="itemsList"></div>
+      <button class="add-item-btn" onclick="addItem()">+ Add another item</button>
+    </div>
+
+    <!-- PAYMENT -->
+    <div class="form-section">
+      <div class="form-section-label">Payment Info</div>
+      <div class="form-grid">
+        <div class="fg">
+          <label>EasyPaisa</label>
+          <input id="easypaisa" placeholder="03XX-XXXXXXX"/>
+        </div>
+        <div class="fg">
+          <label>JazzCash</label>
+          <input id="jazzcash" placeholder="03XX-XXXXXXX"/>
+        </div>
+      </div>
+    </div>
+
+    <!-- NOTES -->
+    <div class="form-section">
+      <div class="form-section-label">Notes (optional)</div>
+      <textarea id="notes" placeholder="Any additional notes..."></textarea>
+    </div>
+
+    <div class="toggle-row" onclick="toggleEmail()" style="margin-bottom:16px;">
+      <label>Send email to client</label>
+      <div class="toggle on" id="emailToggle"></div>
+    </div>
+
+    <!-- Mobile preview toggle -->
+    <button class="preview-toggle" onclick="toggleMobilePreview()">👁 Show Preview</button>
+
+    <button class="submit-btn" id="submitBtn" onclick="submit()">
+      <div class="spin" id="spin"></div>
+      <span id="btnTxt">Generate & Send Invoice</span>
+    </button>
+  </div>
+
+  <!-- PREVIEW -->
+  <div class="preview-card" id="previewCard">
+    <div class="preview-hdr">Live Preview</div>
+    <div class="preview-body">
+      <div class="prev-row"><div class="prev-key">Client</div><div class="prev-val" id="pClient">—</div></div>
+      <div class="prev-row"><div class="prev-key">Items</div><div class="prev-val" id="pItems">—</div></div>
+      <div class="prev-row"><div class="prev-key">Currency</div><div class="prev-val" id="pCurrency">PKR</div></div>
+      <div class="prev-row" id="pTaxRow" style="display:none"><div class="prev-key">GST 17%</div><div class="prev-val" id="pTax">—</div></div>
+      <div class="prev-row"><div class="prev-key">Due In</div><div class="prev-val" id="pDue">15 days</div></div>
+      <div class="prev-total">
+        <div class="prev-total-label">TOTAL</div>
+        <div class="prev-total-val" id="pTotal">0</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- SUCCESS -->
+<div class="success-overlay" id="successOverlay">
+  <div class="success-box">
+    <div class="success-icon">✅</div>
+    <div class="success-title">Invoice Sent!</div>
+    <div class="success-num" id="sucNum">INV-2026-001</div>
+    <div class="success-sub" id="sucSub">Invoice generated and emailed.</div>
+    <div class="email-prev" id="sucEmailPrev"></div>
+    <div class="success-actions">
+      <button class="suc-btn secondary" onclick="window.location='/'">Dashboard</button>
+      <button class="suc-btn primary" onclick="dlPdf()">⬇ Download PDF</button>
+    </div>
+    <button class="suc-btn secondary" style="width:100%;margin-top:6px;" onclick="resetForm()">+ New Invoice</button>
+  </div>
+</div>
+
+<script>
+let taxEnabled=false,emailEnabled=true,config={},currentPdf=null,items=[],itemId=0,previewOpen=false;
+
+async function init(){
+  config=await fetch('/api/config').then(r=>r.json());
+  if(config.easypaisa)document.getElementById('easypaisa').value=config.easypaisa;
+  if(config.jazzcash)document.getElementById('jazzcash').value=config.jazzcash;
+  addItem();
+}
+
+function addItem(){
+  const id=++itemId;
+  items.push({id,desc:'',qty:1,price:0});
+  renderItems();
+}
+
+function removeItem(id){
+  if(items.length<=1)return;
+  items=items.filter(i=>i.id!==id);
+  renderItems();
+}
+
+function renderItems(){
+  document.getElementById('itemsList').innerHTML=items.map(item=>`
+    <div class="item-row" id="item-${item.id}">
+      <div class="item-grid">
+        <div class="fg">
+          <label>Description</label>
+          <input value="${item.desc}" placeholder="Service..." oninput="updateItem(${item.id},'desc',this.value)"/>
+        </div>
+        <div class="fg">
+          <label>Qty</label>
+          <input type="number" value="${item.qty}" min="1" oninput="updateItem(${item.id},'qty',this.value)"/>
+        </div>
+        <div class="fg">
+          <label>Price</label>
+          <input type="number" value="${item.price||''}" placeholder="0" oninput="updateItem(${item.id},'price',this.value)"/>
+        </div>
+        <button class="remove-item" onclick="removeItem(${item.id})">✕</button>
+      </div>
+      <div class="item-total" id="itotal-${item.id}">${fmtAmt(item.qty*item.price)}</div>
+    </div>`).join('');
+}
+
+function updateItem(id,field,val){
+  const item=items.find(i=>i.id===id);
+  if(!item)return;
+  if(field==='qty')item.qty=parseFloat(val)||1;
+  if(field==='price')item.price=parseFloat(val)||0;
+  if(field==='desc')item.desc=val;
+  const el=document.getElementById(`itotal-${id}`);
+  if(el)el.textContent=fmtAmt(item.qty*item.price);
+  updatePreview();
+}
+
+function toggleTax(){taxEnabled=!taxEnabled;document.getElementById('taxToggle').classList.toggle('on',taxEnabled);document.getElementById('pTaxRow').style.display=taxEnabled?'flex':'none';updatePreview();}
+function toggleEmail(){emailEnabled=!emailEnabled;document.getElementById('emailToggle').classList.toggle('on',emailEnabled);}
+function toggleMobilePreview(){
+  previewOpen=!previewOpen;
+  document.getElementById('previewCard').classList.toggle('mobile-open',previewOpen);
+  document.querySelector('.preview-toggle').textContent=previewOpen?'👁 Hide Preview':'👁 Show Preview';
+}
+
+function updatePreview(){
+  const name=document.getElementById('clientName').value;
+  const currency=document.getElementById('currency').value;
+  const due=document.getElementById('dueDays').value;
+  const subtotal=items.reduce((s,i)=>s+i.qty*i.price,0);
+  const tax=taxEnabled?subtotal*.17:0;
+  const total=subtotal+tax;
+  document.getElementById('pClient').textContent=name||'—';
+  document.getElementById('pItems').textContent=items.filter(i=>i.desc).map(i=>i.desc.slice(0,18)+'…').join(', ')||'—';
+  document.getElementById('pCurrency').textContent=currency;
+  document.getElementById('pDue').textContent=`${due} days`;
+  document.getElementById('pTax').textContent=fmtAmt(tax);
+  document.getElementById('pTotal').textContent=currency==='USD'?`$${total.toFixed(2)}`:`PKR ${total.toLocaleString('en',{maximumFractionDigits:0})}`;
+}
+
+let acTimeout;
+async function searchClients(q){
+  updatePreview();
+  clearTimeout(acTimeout);
+  if(!q||q.length<2){closeAc();return;}
+  acTimeout=setTimeout(async()=>{
+    const rows=await fetch(`/api/clients/search?q=${encodeURIComponent(q)}`).then(r=>r.json());
+    const list=document.getElementById('acList');
+    if(!rows.length){closeAc();return;}
+    list.innerHTML=rows.map(c=>`
+      <div class="ac-item" onclick="selectClient(${JSON.stringify(c).replace(/"/g,'&quot;')})">
+        <div class="ac-name">${c.name}</div>
+        <div class="ac-email">${c.email}</div>
+      </div>`).join('');
+    list.classList.add('open');
+  },250);
+}
+
+function selectClient(c){
+  document.getElementById('clientName').value=c.name;
+  document.getElementById('clientEmail').value=c.email;
+  if(c.phone)document.getElementById('clientPhone').value=c.phone;
+  if(c.currency)document.getElementById('currency').value=c.currency;
+  closeAc();updatePreview();
+}
+function closeAc(){document.getElementById('acList').classList.remove('open');}
+document.addEventListener('click',e=>{if(!e.target.closest('.autocomplete-wrap'))closeAc();});
+
+async function submit(){
+  const name=document.getElementById('clientName').value.trim();
+  const email=document.getElementById('clientEmail').value.trim();
+  if(!name)return toast('Enter client name','err');
+  if(!email)return toast('Enter client email','err');
+  const validItems=items.filter(i=>i.desc&&i.price>0);
+  if(!validItems.length)return toast('Add at least one item with description and price','err');
+  setLoading(true);
+  try{
+    const res=await fetch('/api/generate-invoice',{
+      method:'POST',headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({
+        client_name:name,client_email:email,
+        client_phone:document.getElementById('clientPhone').value,
+        currency:document.getElementById('currency').value,
+        due_days:parseInt(document.getElementById('dueDays').value),
+        tax_percent:taxEnabled?17:0,
+        easypaisa:document.getElementById('easypaisa').value,
+        jazzcash:document.getElementById('jazzcash').value,
+        notes:document.getElementById('notes').value,
+        send_email:emailEnabled,
+        items:validItems.map(i=>({description:i.desc,qty:i.qty,unit_price:i.price})),
+      })
+    });
+    const data=await res.json();
+    if(data.error)throw new Error(data.error);
+    currentPdf=data.pdf_url;
+    document.getElementById('sucNum').textContent=data.invoice_number;
+    document.getElementById('sucSub').textContent=data.email_sent?`Emailed to ${email}`:'PDF generated (email not sent)';
+    document.getElementById('sucEmailPrev').textContent=data.email_preview;
+    document.getElementById('successOverlay').classList.add('open');
+  }catch(e){toast('Error: '+e.message,'err');}
+  setLoading(false);
+}
+
+function dlPdf(){if(currentPdf)window.open(currentPdf,'_blank');}
+
+function resetForm(){
+  document.getElementById('successOverlay').classList.remove('open');
+  ['clientName','clientEmail','clientPhone','notes'].forEach(id=>document.getElementById(id).value='');
+  taxEnabled=false;emailEnabled=true;
+  document.getElementById('taxToggle').classList.remove('on');
+  document.getElementById('emailToggle').classList.add('on');
+  items=[];itemId=0;addItem();updatePreview();
+}
+
+function setLoading(s){
+  document.getElementById('submitBtn').disabled=s;
+  document.getElementById('spin').style.display=s?'block':'none';
+  document.getElementById('btnTxt').textContent=s?'Generating...':'Generate & Send Invoice';
+}
+
+function fmtAmt(n){
+  const cur=document.getElementById('currency')?.value||'PKR';
+  if(!n)return cur==='USD'?'$0.00':'PKR 0';
+  return cur==='USD'?`$${n.toFixed(2)}`:`PKR ${n.toLocaleString('en',{maximumFractionDigits:0})}`;
+}
+
+function toast(msg,type){
+  const t=document.createElement('div');t.className=`toast ${type}`;t.textContent=msg;
+  document.body.appendChild(t);setTimeout(()=>t.remove(),3500);
+}
+
+init();
+</script>
+</body>
+</html>
