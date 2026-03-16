@@ -17,7 +17,7 @@ Built with Python + Google Gemini + Flask.
 
 ### 1. Clone
 ```bash
-git clone https://github.com/YOURUSERNAME/invoiceflow
+https://github.com/aliraza0-ops/invoiceflow.git
 cd invoiceflow
 ```
 
