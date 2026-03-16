@@ -13,6 +13,14 @@
   --text:#e8e8e0;--text-dim:#888;--text-dimmer:#444;
   --shadow:0 2px 20px rgba(0,0,0,0.5);
 }
+body.light{
+  --bg:#f7f7f7;--s1:#ffffff;--s2:#f2f2f2;--s3:#e6e6e6;
+  --border:#d3d3d3;--border2:#c2c2c2;
+  --gold:#c9a84c;--gold2:#836a32;--gold-dim:rgba(201,168,76,0.2);
+  --green:#2a7d51;--red:#c0392b;--blue:#1f6bcc;
+  --text:#1b1b1b;--text-dim:#4d4d4d;--text-dimmer:#707070;
+  --shadow:0 2px 20px rgba(0,0,0,0.08);
+}
 *{margin:0;padding:0;box-sizing:border-box;}
 body{background:var(--bg);color:var(--text);font-family:'DM Mono',monospace;min-height:100vh;}
 
@@ -75,6 +83,8 @@ select option{background:var(--s2);}
 .submit-btn{width:100%;padding:16px;background:var(--gold);border:none;border-radius:10px;color:#0d0d0d;font-family:'Fraunces',serif;font-size:16px;font-weight:700;cursor:pointer;transition:all .2s;margin-top:8px;display:flex;align-items:center;justify-content:center;gap:10px;touch-action:manipulation;}
 .submit-btn:active{opacity:.85;}
 .submit-btn:disabled{opacity:.5;cursor:not-allowed;}
+.theme-btn{background:transparent;border:1px solid var(--border);border-radius:8px;color:var(--text-dimmer);padding:6px 10px;font-family:'DM Mono',monospace;font-size:11px;cursor:pointer;transition:all .15s;touch-action:manipulation;}
+.theme-btn:hover{border-color:var(--gold);color:var(--gold);}
 .spin{width:16px;height:16px;border:2px solid rgba(0,0,0,.3);border-top-color:#000;border-radius:50%;animation:spin .7s linear infinite;display:none;}
 @keyframes spin{to{transform:rotate(360deg)}}
 
@@ -134,7 +144,10 @@ select option{background:var(--s2);}
 
 <header>
   <div class="hdr-logo" onclick="window.location='/'">InvoiceFlow</div>
-  <div class="hdr-back" onclick="window.location='/'">← Dashboard</div>
+  <div style="display:flex;align-items:center;gap:12px;">
+    <div class="hdr-back" onclick="window.location='/'">← Dashboard</div>
+    <button class="theme-btn" id="themeBtn" onclick="toggleTheme()">☀️ Light</button>
+  </div>
 </header>
 
 <div class="page">
@@ -270,6 +283,10 @@ select option{background:var(--s2);}
 let taxEnabled=false,emailEnabled=true,config={},currentPdf=null,items=[],itemId=0,previewOpen=false;
 
 async function init(){
+  const storedTheme=localStorage.getItem('theme');
+  if(storedTheme==='light')document.body.classList.add('light');
+  updateThemeBtn();
+
   config=await fetch('/api/config').then(r=>r.json());
   if(config.easypaisa)document.getElementById('easypaisa').value=config.easypaisa;
   if(config.jazzcash)document.getElementById('jazzcash').value=config.jazzcash;
@@ -428,6 +445,18 @@ function fmtAmt(n){
   const cur=document.getElementById('currency')?.value||'PKR';
   if(!n)return cur==='USD'?'$0.00':'PKR 0';
   return cur==='USD'?`$${n.toFixed(2)}`:`PKR ${n.toLocaleString('en',{maximumFractionDigits:0})}`;
+}
+
+function updateThemeBtn(){
+  const btn=document.getElementById('themeBtn');
+  if(!btn) return;
+  btn.textContent=document.body.classList.contains('light')?'🌙 Dark':'☀️ Light';
+}
+
+function toggleTheme(){
+  document.body.classList.toggle('light');
+  localStorage.setItem('theme',document.body.classList.contains('light')?'light':'dark');
+  updateThemeBtn();
 }
 
 function toast(msg,type){

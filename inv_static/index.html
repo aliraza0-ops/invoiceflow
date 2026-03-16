@@ -13,6 +13,14 @@
   --text:#e8e8e0;--text-dim:#888;--text-dimmer:#444;
   --shadow:0 2px 20px rgba(0,0,0,0.4);
 }
+body.light{
+  --bg:#f7f7f7;--s1:#ffffff;--s2:#f2f2f2;--s3:#e6e6e6;
+  --border:#d3d3d3;--border2:#c2c2c2;
+  --gold:#c9a84c;--gold2:#836a32;--gold-dim:rgba(201,168,76,0.2);
+  --red:#c0392b;--green:#2a7d51;--blue:#1f6bcc;--orange:#d87d3a;
+  --text:#1b1b1b;--text-dim:#4d4d4d;--text-dimmer:#707070;
+  --shadow:0 2px 20px rgba(0,0,0,0.08);
+}
 *{margin:0;padding:0;box-sizing:border-box;}
 body{background:var(--bg);color:var(--text);font-family:'DM Mono',monospace;display:flex;height:100vh;overflow:hidden;}
 
@@ -39,6 +47,8 @@ body{background:var(--bg);color:var(--text);font-family:'DM Mono',monospace;disp
 .topbar-right{display:flex;gap:8px;align-items:center;flex:1;justify-content:flex-end;}
 .new-btn{background:var(--gold);color:#0d0d0d;border:none;padding:8px 14px;border-radius:8px;font-family:'DM Mono',monospace;font-size:11px;cursor:pointer;transition:all .15s;letter-spacing:.5px;white-space:nowrap;}
 .new-btn:hover{background:var(--gold2);}
+.theme-btn{background:transparent;border:1px solid var(--border);border-radius:8px;color:var(--text-dimmer);padding:6px 10px;font-family:'DM Mono',monospace;font-size:11px;cursor:pointer;transition:all .15s;}
+.theme-btn:hover{border-color:var(--gold);color:var(--gold);}
 .search-box{background:var(--s2);border:1px solid var(--border);border-radius:8px;padding:7px 12px;font-family:'DM Mono',monospace;font-size:11px;color:var(--text);outline:none;width:160px;min-width:0;}
 .search-box::placeholder{color:var(--text-dimmer);}
 .search-box:focus{border-color:var(--gold);box-shadow:0 0 0 2px var(--gold-dim);}
@@ -228,6 +238,7 @@ input.modal-input:focus,select.modal-select:focus{border-color:var(--gold);}
     </div>
     <div class="topbar-right">
       <input class="search-box" id="searchBox" placeholder="Search..." oninput="onSearch(this.value)"/>
+      <button class="theme-btn" id="themeBtn" onclick="toggleTheme()">☀️ Light</button>
       <button class="new-btn" onclick="window.location='/new'">+ New</button>
     </div>
   </div>
@@ -373,6 +384,10 @@ input.modal-input:focus,select.modal-select:focus{border-color:var(--gold);}
 let currentFilter='',currentSearch='',markingInv=null;
 
 async function init(){
+  const storedTheme=localStorage.getItem('theme');
+  if(storedTheme==='light')document.body.classList.add('light');
+  updateThemeBtn();
+
   const cfg=await fetch('/api/config').then(r=>r.json());
   document.getElementById('gmailDot').classList.toggle('ok',cfg.gmail_ok);
   document.getElementById('geminiDot').classList.toggle('ok',cfg.gemini_ok);
@@ -519,6 +534,18 @@ function dlInvoice(inv){window.open(`/invoices/${inv}.pdf`,'_blank');}
 function fmtPKR(n){return n>=100000?`${(n/1000).toFixed(0)}K`:n.toLocaleString('en',{maximumFractionDigits:0});}
 function openModal(id){document.getElementById(id).classList.add('open');}
 function closeModal(id){document.getElementById(id).classList.remove('open');}
+function updateThemeBtn(){
+  const btn=document.getElementById('themeBtn');
+  if(!btn) return;
+  btn.textContent=document.body.classList.contains('light')?'🌙 Dark':'☀️ Light';
+}
+
+function toggleTheme(){
+  document.body.classList.toggle('light');
+  localStorage.setItem('theme',document.body.classList.contains('light')?'light':'dark');
+  updateThemeBtn();
+}
+
 function toast(msg,type){const t=document.createElement('div');t.className=`toast ${type}`;t.textContent=msg;document.body.appendChild(t);setTimeout(()=>t.remove(),3500);}
 document.querySelectorAll('.modal-overlay').forEach(m=>m.addEventListener('click',e=>{if(e.target===m)m.classList.remove('open');}));
 init();
