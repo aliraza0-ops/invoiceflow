@@ -17,7 +17,7 @@
 body{background:var(--bg);color:var(--text);font-family:'DM Mono',monospace;display:flex;height:100vh;overflow:hidden;}
 
 /* SIDEBAR */
-.sidebar{width:220px;background:var(--s1);border-right:1px solid var(--border);display:flex;flex-direction:column;flex-shrink:0;transition:transform .25s ease;z-index:100;}
+.sidebar{width:220px;background:var(--s1);border-right:1px solid var(--border);display:flex;flex-direction:column;flex-shrink:0;}
 .sidebar-logo{padding:24px 20px 20px;border-bottom:1px solid var(--border);}
 .logo-name{font-family:'Fraunces',serif;font-weight:700;font-size:22px;color:var(--gold2);letter-spacing:-0.5px;}
 .logo-sub{font-size:9px;color:var(--text-dimmer);letter-spacing:3px;text-transform:uppercase;margin-top:2px;}
@@ -33,36 +33,32 @@ body{background:var(--bg);color:var(--text);font-family:'DM Mono',monospace;disp
 .cbdot.ok{background:var(--green);box-shadow:0 0 6px var(--green);}
 
 /* MAIN */
-.main{flex:1;display:flex;flex-direction:column;overflow:hidden;min-width:0;}
-.topbar{height:56px;background:var(--s1);border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;padding:0 20px;flex-shrink:0;gap:10px;}
-.topbar-title{font-family:'Fraunces',serif;font-size:16px;color:var(--text);font-weight:600;white-space:nowrap;}
-.topbar-right{display:flex;gap:8px;align-items:center;flex:1;justify-content:flex-end;}
-.new-btn{background:var(--gold);color:#0d0d0d;border:none;padding:8px 14px;border-radius:8px;font-family:'DM Mono',monospace;font-size:11px;cursor:pointer;transition:all .15s;letter-spacing:.5px;white-space:nowrap;}
-.new-btn:hover{background:var(--gold2);}
-.search-box{background:var(--s2);border:1px solid var(--border);border-radius:8px;padding:7px 12px;font-family:'DM Mono',monospace;font-size:11px;color:var(--text);outline:none;width:160px;min-width:0;}
+.main{flex:1;display:flex;flex-direction:column;overflow:hidden;}
+.topbar{height:56px;background:var(--s1);border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;padding:0 28px;flex-shrink:0;}
+.topbar-title{font-family:'Fraunces',serif;font-size:16px;color:var(--text);font-weight:600;}
+.topbar-right{display:flex;gap:10px;align-items:center;}
+.new-btn{background:var(--gold);color:#0d0d0d;border:none;padding:8px 18px;border-radius:8px;font-family:'DM Mono',monospace;font-size:11px;font-weight:400;cursor:pointer;transition:all .15s;letter-spacing:.5px;}
+.new-btn:hover{background:var(--gold2);transform:translateY(-1px);}
+.search-box{background:var(--s2);border:1px solid var(--border);border-radius:8px;padding:7px 12px;font-family:'DM Mono',monospace;font-size:11px;color:var(--text);outline:none;width:200px;}
 .search-box::placeholder{color:var(--text-dimmer);}
 .search-box:focus{border-color:var(--gold);box-shadow:0 0 0 2px var(--gold-dim);}
 
-/* HAMBURGER */
-.hamburger{display:none;background:none;border:none;color:var(--text-dim);font-size:20px;cursor:pointer;padding:4px;line-height:1;}
-.sidebar-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:99;}
-
 /* CONTENT */
-.content{flex:1;overflow-y:auto;padding:20px;}
+.content{flex:1;overflow-y:auto;padding:28px;}
 .content::-webkit-scrollbar{width:4px;}
 .content::-webkit-scrollbar-thumb{background:var(--border2);border-radius:2px;}
 
 /* STATS ROW */
-.stats-row{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:24px;}
-.stat-card{background:var(--s1);border:1px solid var(--border);border-radius:14px;padding:16px;position:relative;overflow:hidden;transition:border-color .2s;}
+.stats-row{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:28px;}
+.stat-card{background:var(--s1);border:1px solid var(--border);border-radius:14px;padding:20px;position:relative;overflow:hidden;transition:border-color .2s;}
 .stat-card:hover{border-color:var(--border2);}
 .stat-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;}
 .stat-card.gold::before{background:linear-gradient(90deg,var(--gold),var(--gold2));}
 .stat-card.green::before{background:var(--green);}
 .stat-card.orange::before{background:var(--orange);}
 .stat-card.red::before{background:var(--red);}
-.stat-label{font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--text-dimmer);margin-bottom:8px;}
-.stat-value{font-family:'Fraunces',serif;font-size:22px;font-weight:600;line-height:1;margin-bottom:4px;}
+.stat-label{font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--text-dimmer);margin-bottom:10px;}
+.stat-value{font-family:'Fraunces',serif;font-size:26px;font-weight:600;line-height:1;margin-bottom:4px;}
 .stat-value.gold{color:var(--gold2);}
 .stat-value.green{color:var(--green);}
 .stat-value.orange{color:var(--orange);}
@@ -70,43 +66,42 @@ body{background:var(--bg);color:var(--text);font-family:'DM Mono',monospace;disp
 .stat-sub{font-size:10px;color:var(--text-dimmer);}
 
 /* SECTION */
-.section-hdr{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;flex-wrap:wrap;gap:8px;}
+.section-hdr{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;}
 .section-title{font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--text-dimmer);display:flex;align-items:center;gap:8px;}
 .section-title::before{content:'';display:block;width:2px;height:12px;background:var(--gold);border-radius:1px;}
 
 /* FILTER PILLS */
-.filter-pills{display:flex;gap:6px;flex-wrap:wrap;}
+.filter-pills{display:flex;gap:6px;}
 .pill{padding:4px 12px;border-radius:100px;font-size:10px;border:1px solid var(--border);color:var(--text-dimmer);cursor:pointer;transition:all .15s;}
 .pill:hover{border-color:var(--gold);color:var(--gold);}
 .pill.active{background:var(--gold-dim);border-color:rgba(201,168,76,0.3);color:var(--gold2);}
 
 /* TABLE */
 .table-wrap{background:var(--s1);border:1px solid var(--border);border-radius:14px;overflow:hidden;}
-.table-scroll{overflow-x:auto;-webkit-overflow-scrolling:touch;}
-table{width:100%;border-collapse:collapse;min-width:500px;}
+table{width:100%;border-collapse:collapse;}
 thead tr{border-bottom:1px solid var(--border);}
-th{padding:12px 14px;text-align:left;font-size:9px;letter-spacing:1.5px;text-transform:uppercase;color:var(--text-dimmer);font-weight:400;white-space:nowrap;}
+th{padding:12px 16px;text-align:left;font-size:9px;letter-spacing:1.5px;text-transform:uppercase;color:var(--text-dimmer);font-weight:400;}
 tbody tr{border-bottom:1px solid var(--border);transition:background .1s;cursor:pointer;}
 tbody tr:last-child{border-bottom:none;}
 tbody tr:hover{background:var(--s2);}
-td{padding:12px 14px;font-size:12px;color:var(--text-dim);}
+td{padding:14px 16px;font-size:12px;color:var(--text-dim);}
 td.primary{color:var(--text);font-weight:400;}
 td.mono{font-family:'DM Mono',monospace;font-size:11px;}
 
-.status-badge{display:inline-flex;align-items:center;gap:5px;padding:3px 10px;border-radius:100px;font-size:10px;white-space:nowrap;}
+.status-badge{display:inline-flex;align-items:center;gap:5px;padding:3px 10px;border-radius:100px;font-size:10px;}
 .status-badge.sent{background:rgba(82,153,224,0.12);color:var(--blue);border:1px solid rgba(82,153,224,0.2);}
 .status-badge.paid{background:rgba(82,200,150,0.12);color:var(--green);border:1px solid rgba(82,200,150,0.2);}
 .status-badge.overdue{background:rgba(224,82,82,0.12);color:var(--red);border:1px solid rgba(224,82,82,0.2);}
 .status-badge.partial{background:rgba(224,150,82,0.12);color:var(--orange);border:1px solid rgba(224,150,82,0.2);}
 .status-dot{width:5px;height:5px;border-radius:50%;background:currentColor;}
 
-.action-btn{background:transparent;border:1px solid var(--border);color:var(--text-dimmer);padding:4px 8px;border-radius:6px;font-size:10px;cursor:pointer;transition:all .15s;font-family:'DM Mono',monospace;white-space:nowrap;}
+.action-btn{background:transparent;border:1px solid var(--border);color:var(--text-dimmer);padding:4px 10px;border-radius:6px;font-size:10px;cursor:pointer;transition:all .15s;font-family:'DM Mono',monospace;}
 .action-btn:hover{border-color:var(--gold);color:var(--gold);}
 .action-btn.mark-paid{border-color:rgba(82,200,150,0.3);color:var(--green);}
 .action-btn.mark-paid:hover{background:rgba(82,200,150,0.1);}
 
 /* BOTTOM GRID */
-.bottom-grid{display:grid;grid-template-columns:1fr 300px;gap:20px;margin-top:24px;}
+.bottom-grid{display:grid;grid-template-columns:1fr 320px;gap:20px;margin-top:24px;}
 
 /* CLIENT PANEL */
 .client-list{background:var(--s1);border:1px solid var(--border);border-radius:14px;overflow:hidden;}
@@ -119,23 +114,27 @@ td.mono{font-family:'DM Mono',monospace;font-size:11px;}
 .client-total{font-size:11px;color:var(--gold);margin-left:auto;white-space:nowrap;}
 
 /* MODAL */
-.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.7);backdrop-filter:blur(4px);z-index:200;display:none;align-items:center;justify-content:center;padding:16px;}
+.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.7);backdrop-filter:blur(4px);z-index:200;display:none;align-items:center;justify-content:center;}
 .modal-overlay.open{display:flex;}
-.modal{background:var(--s2);border:1px solid var(--border2);border-radius:16px;padding:24px;width:100%;max-width:460px;max-height:90vh;overflow-y:auto;box-shadow:var(--shadow);}
+.modal{background:var(--s2);border:1px solid var(--border2);border-radius:16px;padding:28px;width:460px;max-height:85vh;overflow-y:auto;box-shadow:var(--shadow);}
 .modal-title{font-family:'Fraunces',serif;font-size:18px;color:var(--text);margin-bottom:20px;display:flex;justify-content:space-between;align-items:center;}
-.modal-close{background:none;border:none;color:var(--text-dimmer);font-size:18px;cursor:pointer;line-height:1;padding:4px;}
+.modal-close{background:none;border:none;color:var(--text-dimmer);font-size:18px;cursor:pointer;line-height:1;}
 .modal-close:hover{color:var(--text);}
+
 .modal-row{display:flex;justify-content:space-between;align-items:flex-start;padding:10px 0;border-bottom:1px solid var(--border);}
 .modal-row:last-child{border-bottom:none;}
-.modal-key{font-size:10px;letter-spacing:1px;text-transform:uppercase;color:var(--text-dimmer);flex-shrink:0;margin-right:12px;}
-.modal-val{font-size:12px;color:var(--text);text-align:right;line-height:1.5;}
+.modal-key{font-size:10px;letter-spacing:1px;text-transform:uppercase;color:var(--text-dimmer);}
+.modal-val{font-size:12px;color:var(--text);text-align:right;max-width:260px;line-height:1.5;}
 .modal-val.gold{color:var(--gold2);font-family:'Fraunces',serif;font-size:18px;}
-.modal-actions{display:flex;gap:8px;margin-top:16px;flex-wrap:wrap;}
-.modal-btn{flex:1;min-width:120px;padding:10px;border-radius:8px;font-family:'DM Mono',monospace;font-size:11px;cursor:pointer;transition:all .15s;border:none;}
+
+.modal-actions{display:flex;gap:8px;margin-top:16px;}
+.modal-btn{flex:1;padding:10px;border-radius:8px;font-family:'DM Mono',monospace;font-size:11px;cursor:pointer;transition:all .15s;border:none;}
 .modal-btn.primary{background:var(--gold);color:#0d0d0d;}
 .modal-btn.primary:hover{background:var(--gold2);}
 .modal-btn.secondary{background:var(--s3);border:1px solid var(--border2);color:var(--text-dim);}
 .modal-btn.secondary:hover{border-color:var(--gold);color:var(--gold);}
+.modal-btn.danger{background:rgba(224,82,82,0.15);border:1px solid rgba(224,82,82,0.3);color:var(--red);}
+
 select.modal-select{background:var(--s3);border:1px solid var(--border2);border-radius:8px;padding:8px 12px;font-family:'DM Mono',monospace;font-size:12px;color:var(--text);outline:none;width:100%;margin-top:12px;}
 input.modal-input{background:var(--s3);border:1px solid var(--border2);border-radius:8px;padding:8px 12px;font-family:'DM Mono',monospace;font-size:12px;color:var(--text);outline:none;width:100%;margin-top:8px;}
 input.modal-input:focus,select.modal-select:focus{border-color:var(--gold);}
@@ -144,66 +143,39 @@ input.modal-input:focus,select.modal-select:focus{border-color:var(--gold);}
 .chart-bars{display:flex;align-items:flex-end;gap:8px;height:80px;padding:0 4px;}
 .chart-bar-wrap{flex:1;display:flex;flex-direction:column;align-items:center;gap:4px;}
 .chart-bar{width:100%;background:var(--gold-dim);border-radius:4px 4px 0 0;border:1px solid rgba(201,168,76,0.2);transition:height .3s ease;min-height:2px;}
-.chart-bar.current{background:linear-gradient(to top,var(--gold),var(--gold2));border-color:var(--gold);}
+.chart-bar.current{background:linear-gradient(to top, var(--gold), var(--gold2));border-color:var(--gold);}
 .chart-month{font-size:8px;color:var(--text-dimmer);letter-spacing:1px;}
 
-.empty{text-align:center;padding:32px;color:var(--text-dimmer);font-size:12px;}
+/* EMPTY STATE */
+.empty{text-align:center;padding:40px;color:var(--text-dimmer);font-size:12px;}
 
-.toast{position:fixed;bottom:20px;right:16px;left:16px;max-width:340px;margin:0 auto;padding:12px 18px;border-radius:10px;font-size:12px;z-index:999;animation:tIn .25s ease;box-shadow:var(--shadow);}
+/* TOAST */
+.toast{position:fixed;bottom:24px;right:24px;padding:12px 18px;border-radius:10px;font-size:12px;z-index:999;animation:tIn .25s ease;box-shadow:var(--shadow);}
 .toast.ok{background:#0d2010;color:var(--green);border:1px solid rgba(82,200,150,0.2);}
 .toast.err{background:#200d0d;color:var(--red);border:1px solid rgba(224,82,82,0.2);}
-@keyframes tIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
-
-/* ── MOBILE ── */
-@media(max-width:768px){
-  body{flex-direction:column;}
-  .sidebar{
-    position:fixed;top:0;left:0;bottom:0;
-    transform:translateX(-100%);
-    width:240px;
-  }
-  .sidebar.open{transform:translateX(0);}
-  .sidebar-overlay.open{display:block;}
-  .hamburger{display:block;}
-  .search-box{width:120px;}
-  .stats-row{grid-template-columns:1fr 1fr;}
-  .bottom-grid{grid-template-columns:1fr;}
-  .content{padding:16px;}
-  .topbar{padding:0 16px;}
-  td{padding:10px 10px;}
-  th{padding:10px 10px;}
-}
-@media(max-width:400px){
-  .stats-row{grid-template-columns:1fr 1fr;}
-  .stat-value{font-size:18px;}
-  .search-box{display:none;}
-  .new-btn{font-size:10px;padding:7px 10px;}
-}
+@keyframes tIn{from{opacity:0;transform:translateX(16px)}to{opacity:1;transform:translateX(0)}}
 </style>
 </head>
 <body>
 
-<!-- SIDEBAR OVERLAY -->
-<div class="sidebar-overlay" id="sidebarOverlay" onclick="closeSidebar()"></div>
-
 <!-- SIDEBAR -->
-<aside class="sidebar" id="sidebar">
+<aside class="sidebar">
   <div class="sidebar-logo">
     <div class="logo-name">InvoiceFlow</div>
     <div class="logo-sub">Production</div>
   </div>
   <nav class="sidebar-nav">
-    <a class="nav-item active" onclick="showSection('dashboard');closeSidebar()">
+    <a class="nav-item active" onclick="showSection('dashboard')">
       <span class="nav-icon">◈</span> Dashboard
     </a>
-    <a class="nav-item" href="/new">
+    <a class="nav-item" href="/new" >
       <span class="nav-icon">＋</span> New Invoice
     </a>
     <div class="nav-sep"></div>
-    <a class="nav-item" onclick="showSection('invoices');closeSidebar()">
+    <a class="nav-item" onclick="showSection('invoices')">
       <span class="nav-icon">≡</span> All Invoices
     </a>
-    <a class="nav-item" onclick="showSection('clients');closeSidebar()">
+    <a class="nav-item" onclick="showSection('clients')">
       <span class="nav-icon">◯</span> Clients
     </a>
   </nav>
@@ -214,27 +186,27 @@ input.modal-input:focus,select.modal-select:focus{border-color:var(--gold);}
     </div>
     <div class="config-badge" style="margin-top:6px">
       <div class="cbdot" id="geminiDot"></div>
-      <span id="geminiLbl">Gemini AI</span>
+      <span id="geminiLbl">Groq AI</span>
     </div>
+    <button onclick="logout()" style="width:100%;margin-top:10px;background:transparent;border:1px solid var(--border);color:var(--text-dimmer);padding:8px;border-radius:8px;font-family:'DM Mono',monospace;font-size:10px;cursor:pointer;transition:all .15s;" onmouseover="this.style.borderColor='var(--red)';this.style.color='var(--red)'" onmouseout="this.style.borderColor='var(--border)';this.style.color='var(--text-dimmer)'">⎋ Logout</button>
   </div>
 </aside>
 
 <!-- MAIN -->
 <div class="main">
   <div class="topbar">
-    <div style="display:flex;align-items:center;gap:10px;">
-      <button class="hamburger" onclick="openSidebar()">☰</button>
-      <div class="topbar-title" id="pageTitle">Dashboard</div>
-    </div>
+    <div class="topbar-title" id="pageTitle">Dashboard</div>
     <div class="topbar-right">
-      <input class="search-box" id="searchBox" placeholder="Search..." oninput="onSearch(this.value)"/>
-      <button class="new-btn" onclick="window.location='/new'">+ New</button>
+      <input class="search-box" id="searchBox" placeholder="Search invoices..." oninput="onSearch(this.value)"/>
+      <button class="new-btn" onclick="window.location='/new'">+ New Invoice</button>
     </div>
   </div>
 
   <div class="content">
-    <!-- DASHBOARD -->
+
+    <!-- DASHBOARD SECTION -->
     <div id="sec-dashboard">
+      <!-- Stats -->
       <div class="stats-row" id="statsRow">
         <div class="stat-card gold">
           <div class="stat-label">Total Revenue</div>
@@ -242,14 +214,14 @@ input.modal-input:focus,select.modal-select:focus{border-color:var(--gold);}
           <div class="stat-sub" id="sUsdRev">Loading...</div>
         </div>
         <div class="stat-card green">
-          <div class="stat-label">Paid</div>
+          <div class="stat-label">Paid Revenue</div>
           <div class="stat-value green" id="sPaidRev">—</div>
           <div class="stat-sub" id="sTotalInv">— invoices</div>
         </div>
         <div class="stat-card orange">
           <div class="stat-label">Pending</div>
           <div class="stat-value orange" id="sPending">—</div>
-          <div class="stat-sub">awaiting</div>
+          <div class="stat-sub">awaiting payment</div>
         </div>
         <div class="stat-card red">
           <div class="stat-label">Overdue</div>
@@ -258,6 +230,7 @@ input.modal-input:focus,select.modal-select:focus{border-color:var(--gold);}
         </div>
       </div>
 
+      <!-- Chart + recent -->
       <div class="bottom-grid">
         <div>
           <div class="section-hdr">
@@ -270,15 +243,13 @@ input.modal-input:focus,select.modal-select:focus{border-color:var(--gold);}
             </div>
           </div>
           <div class="table-wrap">
-            <div class="table-scroll">
-              <table>
-                <thead><tr>
-                  <th>Invoice</th><th>Client</th><th>Amount</th>
-                  <th>Due</th><th>Status</th><th>Action</th>
-                </tr></thead>
-                <tbody id="invoiceTable"><tr><td colspan="6" class="empty">Loading...</td></tr></tbody>
-              </table>
-            </div>
+            <table>
+              <thead><tr>
+                <th>Invoice</th><th>Client</th><th>Amount</th>
+                <th>Due</th><th>Status</th><th>Action</th>
+              </tr></thead>
+              <tbody id="invoiceTable"><tr><td colspan="6" class="empty">Loading...</td></tr></tbody>
+            </table>
           </div>
         </div>
 
@@ -295,7 +266,7 @@ input.modal-input:focus,select.modal-select:focus{border-color:var(--gold);}
       </div>
     </div>
 
-    <!-- INVOICES -->
+    <!-- INVOICES SECTION -->
     <div id="sec-invoices" style="display:none">
       <div class="section-hdr">
         <div class="section-title">All Invoices</div>
@@ -307,32 +278,29 @@ input.modal-input:focus,select.modal-select:focus{border-color:var(--gold);}
         </div>
       </div>
       <div class="table-wrap">
-        <div class="table-scroll">
-          <table>
-            <thead><tr>
-              <th>Invoice</th><th>Client</th><th>Amount</th>
-              <th>Date</th><th>Due</th><th>Status</th><th>Action</th>
-            </tr></thead>
-            <tbody id="invoiceTableFull"><tr><td colspan="7" class="empty">Loading...</td></tr></tbody>
-          </table>
-        </div>
+        <table>
+          <thead><tr>
+            <th>Invoice</th><th>Client</th><th>Amount</th>
+            <th>Date</th><th>Due</th><th>Status</th><th>Action</th>
+          </tr></thead>
+          <tbody id="invoiceTableFull"><tr><td colspan="7" class="empty">Loading...</td></tr></tbody>
+        </table>
       </div>
     </div>
 
-    <!-- CLIENTS -->
+    <!-- CLIENTS SECTION -->
     <div id="sec-clients" style="display:none">
       <div class="section-hdr"><div class="section-title">All Clients</div></div>
       <div class="table-wrap">
-        <div class="table-scroll">
-          <table>
-            <thead><tr>
-              <th>Name</th><th>Email</th><th>Phone</th><th>Currency</th><th>Since</th>
-            </tr></thead>
-            <tbody id="clientTable"><tr><td colspan="5" class="empty">Loading...</td></tr></tbody>
-          </table>
-        </div>
+        <table>
+          <thead><tr>
+            <th>Name</th><th>Email</th><th>Phone</th><th>Currency</th><th>Since</th>
+          </tr></thead>
+          <tbody id="clientTable"><tr><td colspan="5" class="empty">Loading...</td></tr></tbody>
+        </table>
       </div>
     </div>
+
   </div>
 </div>
 
@@ -350,9 +318,9 @@ input.modal-input:focus,select.modal-select:focus{border-color:var(--gold);}
 
 <!-- MARK PAID MODAL -->
 <div class="modal-overlay" id="paidModal">
-  <div class="modal" style="max-width:340px;">
+  <div class="modal" style="width:340px;">
     <div class="modal-title">
-      Mark <span id="paidInvNum" style="color:var(--gold2)">—</span>
+      Mark Invoice <span id="paidInvNum" style="color:var(--gold2)">—</span>
       <button class="modal-close" onclick="closeModal('paidModal')">✕</button>
     </div>
     <p style="font-size:12px;color:var(--text-dimmer);margin-bottom:12px;">Update payment status</p>
@@ -364,40 +332,57 @@ input.modal-input:focus,select.modal-select:focus{border-color:var(--gold);}
     <input class="modal-input" id="paidAmount" type="number" placeholder="Amount paid (optional)" style="display:none"/>
     <div class="modal-actions" style="margin-top:16px;">
       <button class="modal-btn secondary" onclick="closeModal('paidModal')">Cancel</button>
-      <button class="modal-btn primary" onclick="confirmMarkPaid()">Update</button>
+      <button class="modal-btn primary" onclick="confirmMarkPaid()">Update Status</button>
     </div>
   </div>
 </div>
 
 <script>
-let currentFilter='',currentSearch='',markingInv=null;
+let currentFilter = '';
+let currentSearch = '';
+let markingInv    = null;
 
-async function init(){
-  const cfg=await fetch('/api/config').then(r=>r.json());
-  document.getElementById('gmailDot').classList.toggle('ok',cfg.gmail_ok);
-  document.getElementById('geminiDot').classList.toggle('ok',cfg.gemini_ok);
-  document.getElementById('gmailLbl').textContent=cfg.gmail_ok?'Gmail ✓':'Gmail ✗';
-  document.getElementById('geminiLbl').textContent=cfg.gemini_ok?'Gemini ✓':'Gemini ✗';
-  loadStats();loadInvoices();loadClients();
+// ── Init ──
+async function init() {
+  const auth = await fetch('/api/auth/check').then(r=>r.json());
+  if (!auth.authenticated) { window.location.href='/login'; return; }
+  const cfg = await fetch('/api/config').then(r=>r.json());
+  document.getElementById('gmailDot').classList.toggle('ok', cfg.gmail_ok);
+  document.getElementById('geminiDot').classList.toggle('ok', cfg.groq_ok);
+  document.getElementById('gmailLbl').textContent  = cfg.gmail_ok ? 'Gmail ✓' : 'Gmail ✗';
+  document.getElementById('geminiLbl').textContent = cfg.groq_ok  ? 'Groq AI ✓' : 'Groq AI ✗';
+  loadStats();
+  loadInvoices();
+  loadClients();
 }
 
-async function loadStats(){
-  const s=await fetch('/api/stats').then(r=>r.json());
-  document.getElementById('sTotalRev').textContent=fmtPKR(s.total_revenue_pkr);
-  document.getElementById('sPaidRev').textContent=fmtPKR(s.paid_revenue_pkr);
-  document.getElementById('sPending').textContent=s.pending_invoices;
-  document.getElementById('sOverdue').textContent=s.overdue_invoices;
-  document.getElementById('sTotalInv').textContent=`${s.total_invoices} total`;
-  document.getElementById('sClients').textContent=`${s.total_clients} clients`;
-  document.getElementById('sUsdRev').textContent=s.total_revenue_usd>0?`+ $${s.total_revenue_usd.toFixed(0)} USD`:'PKR only';
+async function logout() {
+  await fetch('/api/auth/logout', {method:'POST'});
+  window.location.href = '/login';
+}
+
+// ── Stats ──
+async function loadStats() {
+  const s = await fetch('/api/stats').then(r=>r.json());
+  document.getElementById('sTotalRev').textContent = fmtPKR(s.total_revenue_pkr);
+  document.getElementById('sPaidRev').textContent  = fmtPKR(s.paid_revenue_pkr);
+  document.getElementById('sPending').textContent  = s.pending_invoices;
+  document.getElementById('sOverdue').textContent  = s.overdue_invoices;
+  document.getElementById('sTotalInv').textContent = `${s.total_invoices} total invoices`;
+  document.getElementById('sClients').textContent  = `${s.total_clients} clients`;
+  if (s.total_revenue_usd > 0)
+    document.getElementById('sUsdRev').textContent = `+ $${s.total_revenue_usd.toFixed(0)} USD`;
+  else
+    document.getElementById('sUsdRev').textContent = 'PKR only';
   renderChart(s.monthly);
 }
 
-function renderChart(monthly){
-  if(!monthly||!monthly.length)return;
-  const max=Math.max(...monthly.map(m=>m.total),1);
-  const reversed=[...monthly].reverse();
-  document.getElementById('chartBars').innerHTML=reversed.map((m,i)=>`
+function renderChart(monthly) {
+  if (!monthly || !monthly.length) return;
+  const max = Math.max(...monthly.map(m=>m.total), 1);
+  const reversed = [...monthly].reverse();
+  const el = document.getElementById('chartBars');
+  el.innerHTML = reversed.map((m, i) => `
     <div class="chart-bar-wrap">
       <div class="chart-bar ${i===reversed.length-1?'current':''}"
            style="height:${Math.max(4,(m.total/max)*72)}px"
@@ -406,22 +391,27 @@ function renderChart(monthly){
     </div>`).join('');
 }
 
-async function loadInvoices(){
-  const rows=await fetch(`/api/invoices?status=${currentFilter}&q=${currentSearch}`).then(r=>r.json());
-  renderInvoiceTable('invoiceTable',rows,false);
-  renderInvoiceTable('invoiceTableFull',rows,true);
+// ── Invoices ──
+async function loadInvoices() {
+  let url = `/api/invoices?status=${currentFilter}&q=${currentSearch}`;
+  const rows = await fetch(url).then(r=>r.json());
+  renderInvoiceTable('invoiceTable', rows, false);
+  renderInvoiceTable('invoiceTableFull', rows, true);
 }
 
-function renderInvoiceTable(tbodyId,rows,full){
-  const tbody=document.getElementById(tbodyId);
-  if(!rows.length){tbody.innerHTML=`<tr><td colspan="${full?7:6}" class="empty">No invoices found</td></tr>`;return;}
-  tbody.innerHTML=rows.map(inv=>{
-    const overdue=inv.status==='SENT'&&new Date(inv.due_date)<new Date();
-    const status=overdue?'overdue':inv.status.toLowerCase();
-    const badge=`<span class="status-badge ${status}"><span class="status-dot"></span>${overdue?'OVERDUE':inv.status}</span>`;
-    const amt=inv.currency==='USD'?`$${inv.total.toFixed(2)}`:fmtPKR(inv.total);
-    const dateCol=full?`<td class="mono">${inv.invoice_date||'—'}</td>`:'';
-    return`<tr onclick="openInvoice('${inv.invoice_number}')">
+function renderInvoiceTable(tbodyId, rows, full) {
+  const tbody = document.getElementById(tbodyId);
+  if (!rows.length) {
+    tbody.innerHTML = `<tr><td colspan="${full?7:6}" class="empty">No invoices found</td></tr>`;
+    return;
+  }
+  tbody.innerHTML = rows.map(inv => {
+    const overdue = inv.status === 'SENT' && new Date(inv.due_date) < new Date();
+    const status  = overdue ? 'overdue' : inv.status.toLowerCase();
+    const badge   = `<span class="status-badge ${status}"><span class="status-dot"></span>${overdue?'OVERDUE':inv.status}</span>`;
+    const amt     = inv.currency === 'USD' ? `$${inv.total.toFixed(2)}` : fmtPKR(inv.total);
+    const dateCol = full ? `<td class="mono">${inv.invoice_date||'—'}</td>` : '';
+    return `<tr onclick="openInvoice('${inv.invoice_number}')">
       <td class="mono primary">${inv.invoice_number}</td>
       <td class="primary">${inv.client_name}</td>
       <td class="mono">${amt}</td>
@@ -429,34 +419,46 @@ function renderInvoiceTable(tbodyId,rows,full){
       <td class="mono">${inv.due_date||'—'}</td>
       <td>${badge}</td>
       <td onclick="event.stopPropagation()">
-        <button class="action-btn" onclick="dlInvoice('${inv.invoice_number}')">⬇</button>
-        ${inv.status!=='PAID'?`<button class="action-btn mark-paid" onclick="openMarkPaid('${inv.invoice_number}')">✓</button>`:''}
+        <button class="action-btn" onclick="dlInvoice('${inv.invoice_number}')">⬇ PDF</button>
+        ${inv.status!=='PAID'?`<button class="action-btn mark-paid" onclick="openMarkPaid('${inv.invoice_number}')">✓ Paid</button>`:''}
       </td>
     </tr>`;
   }).join('');
 }
 
-function filterInvoices(status,el){
-  currentFilter=status;
+function filterInvoices(status, el) {
+  currentFilter = status;
   document.querySelectorAll('.pill').forEach(p=>p.classList.remove('active'));
-  el.classList.add('active');loadInvoices();
+  el.classList.add('active');
+  loadInvoices();
 }
-function onSearch(q){currentSearch=q;loadInvoices();}
 
-async function loadClients(){
-  const rows=await fetch('/api/clients').then(r=>r.json());
-  const cl=document.getElementById('clientList');
-  cl.innerHTML=!rows.length?'<div class="empty">No clients yet</div>':rows.slice(0,6).map(c=>`
-    <div class="client-item">
-      <div class="client-avatar">${c.name[0].toUpperCase()}</div>
-      <div style="min-width:0">
-        <div class="client-name">${c.name}</div>
-        <div class="client-email">${c.email}</div>
-      </div>
-      <div class="client-total">${c.currency}</div>
-    </div>`).join('');
-  const ct=document.getElementById('clientTable');
-  ct.innerHTML=!rows.length?'<tr><td colspan="5" class="empty">No clients</td></tr>':rows.map(c=>`
+function onSearch(q) {
+  currentSearch = q;
+  loadInvoices();
+}
+
+// ── Clients ──
+async function loadClients() {
+  const rows = await fetch('/api/clients').then(r=>r.json());
+  // Top clients widget
+  const cl = document.getElementById('clientList');
+  if (!rows.length) { cl.innerHTML = '<div class="empty">No clients yet</div>'; }
+  else {
+    cl.innerHTML = rows.slice(0,6).map(c => `
+      <div class="client-item">
+        <div class="client-avatar">${c.name[0].toUpperCase()}</div>
+        <div>
+          <div class="client-name">${c.name}</div>
+          <div class="client-email">${c.email}</div>
+        </div>
+        <div class="client-total">${c.currency}</div>
+      </div>`).join('');
+  }
+  // Full client table
+  const ct = document.getElementById('clientTable');
+  if (!rows.length) { ct.innerHTML = '<tr><td colspan="5" class="empty">No clients</td></tr>'; return; }
+  ct.innerHTML = rows.map(c=>`
     <tr>
       <td class="primary">${c.name}</td>
       <td class="mono">${c.email}</td>
@@ -466,13 +468,16 @@ async function loadClients(){
     </tr>`).join('');
 }
 
-async function openInvoice(invNum){
-  const data=await fetch(`/api/invoices/${invNum}`).then(r=>r.json());
-  const inv=data.invoice,items=data.items;
-  const amt=inv.currency==='USD'?`$${inv.total.toFixed(2)}`:`PKR ${inv.total.toLocaleString()}`;
-  const overdue=inv.status==='SENT'&&new Date(inv.due_date)<new Date();
-  document.getElementById('modalInvNum').textContent=invNum;
-  document.getElementById('modalBody').innerHTML=`
+// ── Invoice detail modal ──
+async function openInvoice(invNum) {
+  const data = await fetch(`/api/invoices/${invNum}`).then(r=>r.json());
+  const inv  = data.invoice;
+  const items = data.items;
+  const amt  = inv.currency === 'USD' ? `$${inv.total.toFixed(2)}` : `PKR ${inv.total.toLocaleString()}`;
+  const overdue = inv.status==='SENT' && new Date(inv.due_date)<new Date();
+
+  document.getElementById('modalInvNum').textContent = invNum;
+  document.getElementById('modalBody').innerHTML = `
     <div class="modal-row"><div class="modal-key">Client</div><div class="modal-val">${inv.client_name}<br/><span style="font-size:10px;color:var(--text-dimmer)">${inv.client_email}</span></div></div>
     <div class="modal-row"><div class="modal-key">Total</div><div class="modal-val gold">${amt}</div></div>
     <div class="modal-row"><div class="modal-key">Status</div><div class="modal-val"><span class="status-badge ${overdue?'overdue':inv.status.toLowerCase()}">${overdue?'OVERDUE':inv.status}</span></div></div>
@@ -481,46 +486,69 @@ async function openInvoice(invNum){
     ${inv.tax_percent>0?`<div class="modal-row"><div class="modal-key">GST ${inv.tax_percent}%</div><div class="modal-val">${inv.currency==='USD'?'$'+inv.tax_amount.toFixed(2):'PKR '+inv.tax_amount.toLocaleString()}</div></div>`:''}
     <div class="modal-row"><div class="modal-key">Items</div><div class="modal-val">${items.map(i=>`${i.description} × ${i.qty}`).join('<br/>')}</div></div>
     ${inv.notes?`<div class="modal-row"><div class="modal-key">Notes</div><div class="modal-val">${inv.notes}</div></div>`:''}
-    ${inv.email_sent?'<div class="modal-row"><div class="modal-key">Email</div><div class="modal-val" style="color:var(--green)">✓ Sent</div></div>':''}`;
-  document.getElementById('modalActions').innerHTML=`
+    ${inv.email_sent?'<div class="modal-row"><div class="modal-key">Email</div><div class="modal-val" style="color:var(--green)">✓ Sent to client</div></div>':''}
+  `;
+  document.getElementById('modalActions').innerHTML = `
     <button class="modal-btn secondary" onclick="dlInvoice('${invNum}')">⬇ Download PDF</button>
-    ${inv.status!=='PAID'?`<button class="modal-btn primary" onclick="closeModal('invModal');openMarkPaid('${invNum}')">✓ Mark Paid</button>`:''}`;
+    ${inv.status!=='PAID'?`<button class="modal-btn primary" onclick="closeModal('invModal');openMarkPaid('${invNum}')">✓ Mark Paid</button>`:''}
+  `;
   openModal('invModal');
 }
 
-function openMarkPaid(invNum){
-  markingInv=invNum;
-  document.getElementById('paidInvNum').textContent=invNum;
-  document.getElementById('paidStatus').value='PAID';
-  document.getElementById('paidAmount').style.display='none';
-  document.getElementById('paidStatus').onchange=function(){
-    document.getElementById('paidAmount').style.display=this.value==='PARTIAL'?'block':'none';
+// ── Mark paid ──
+function openMarkPaid(invNum) {
+  markingInv = invNum;
+  document.getElementById('paidInvNum').textContent = invNum;
+  document.getElementById('paidStatus').value = 'PAID';
+  document.getElementById('paidAmount').style.display = 'none';
+  document.getElementById('paidStatus').onchange = function() {
+    document.getElementById('paidAmount').style.display =
+      this.value === 'PARTIAL' ? 'block' : 'none';
   };
   openModal('paidModal');
 }
 
-async function confirmMarkPaid(){
-  const status=document.getElementById('paidStatus').value;
-  const paid=parseFloat(document.getElementById('paidAmount').value)||0;
-  await fetch(`/api/invoices/${markingInv}/status`,{method:'PATCH',headers:{'Content-Type':'application/json'},body:JSON.stringify({status,amount_paid:paid})});
-  closeModal('paidModal');toast(`${markingInv} marked as ${status}`,'ok');
-  loadInvoices();loadStats();
+async function confirmMarkPaid() {
+  const status = document.getElementById('paidStatus').value;
+  const paid   = parseFloat(document.getElementById('paidAmount').value) || 0;
+  await fetch(`/api/invoices/${markingInv}/status`, {
+    method: 'PATCH',
+    headers: {'Content-Type':'application/json'},
+    body: JSON.stringify({status, amount_paid: paid})
+  });
+  closeModal('paidModal');
+  toast(`${markingInv} marked as ${status}`, 'ok');
+  loadInvoices();
+  loadStats();
 }
 
-function showSection(name){
-  ['dashboard','invoices','clients'].forEach(s=>{document.getElementById(`sec-${s}`).style.display=s===name?'block':'none';});
+// ── Sections ──
+function showSection(name) {
+  ['dashboard','invoices','clients'].forEach(s => {
+    document.getElementById(`sec-${s}`).style.display = s===name ? 'block' : 'none';
+  });
   document.querySelectorAll('.nav-item').forEach(n=>n.classList.remove('active'));
-  document.getElementById('pageTitle').textContent=name[0].toUpperCase()+name.slice(1);
+  document.getElementById('pageTitle').textContent =
+    name[0].toUpperCase() + name.slice(1);
 }
 
-function openSidebar(){document.getElementById('sidebar').classList.add('open');document.getElementById('sidebarOverlay').classList.add('open');}
-function closeSidebar(){document.getElementById('sidebar').classList.remove('open');document.getElementById('sidebarOverlay').classList.remove('open');}
-function dlInvoice(inv){window.open(`/invoices/${inv}.pdf`,'_blank');}
-function fmtPKR(n){return n>=100000?`${(n/1000).toFixed(0)}K`:n.toLocaleString('en',{maximumFractionDigits:0});}
-function openModal(id){document.getElementById(id).classList.add('open');}
-function closeModal(id){document.getElementById(id).classList.remove('open');}
-function toast(msg,type){const t=document.createElement('div');t.className=`toast ${type}`;t.textContent=msg;document.body.appendChild(t);setTimeout(()=>t.remove(),3500);}
-document.querySelectorAll('.modal-overlay').forEach(m=>m.addEventListener('click',e=>{if(e.target===m)m.classList.remove('open');}));
+// ── Helpers ──
+function dlInvoice(inv) { window.open(`/invoices/${inv}.pdf`, '_blank'); }
+function fmtPKR(n) { return n >= 100000 ? `${(n/1000).toFixed(0)}K` : n.toLocaleString('en', {maximumFractionDigits:0}); }
+function openModal(id) { document.getElementById(id).classList.add('open'); }
+function closeModal(id) { document.getElementById(id).classList.remove('open'); }
+function toast(msg, type) {
+  const t = document.createElement('div');
+  t.className = `toast ${type}`;
+  t.textContent = msg;
+  document.body.appendChild(t);
+  setTimeout(()=>t.remove(), 3500);
+}
+
+document.querySelectorAll('.modal-overlay').forEach(m =>
+  m.addEventListener('click', e => { if(e.target===m) m.classList.remove('open'); })
+);
+
 init();
 </script>
 </body>

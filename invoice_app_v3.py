@@ -1,13 +1,14 @@
 import os, io, json, smtplib, datetime, sqlite3, logging
 from pathlib import Path
+from functools import wraps
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 from email.mime.base import MIMEBase
 from email import encoders
-from flask import Flask, request, jsonify, send_from_directory, g
+from flask import Flask, request, jsonify, send_from_directory, g, session, redirect
 from flask_cors import CORS
 from dotenv import load_dotenv
-import google.generativeai as genai
+from groq import Groq
 from reportlab.lib.pagesizes import A4
 from reportlab.lib import colors
 from reportlab.lib.units import mm
@@ -23,14 +24,11 @@ load_dotenv()
 logging.basicConfig(
     level=logging.INFO,
     format='%(asctime)s [%(levelname)s] %(message)s',
-    handlers=[
-        logging.FileHandler('invoiceflow.log'),
-        logging.StreamHandler()
-    ]
+    handlers=[logging.FileHandler('invoiceflow.log'), logging.StreamHandler()]
 )
 log = logging.getLogger(__name__)
 
-GEMINI_API_KEY   = os.getenv("GEMINI_API_KEY")
+GROQ_API_KEY     = os.getenv("GROQ_API_KEY")
 GMAIL_USER       = os.getenv("GMAIL_USER")
 GMAIL_PASSWORD   = os.getenv("GMAIL_APP_PASSWORD")
 BUSINESS_NAME    = os.getenv("BUSINESS_NAME",    "My Business")
@@ -41,16 +39,53 @@ BUSINESS_NTN     = os.getenv("BUSINESS_NTN",     "")
 WEBHOOK_SECRET   = os.getenv("WEBHOOK_SECRET",   "invoiceflow2026")
 EASYPAISA_NUM    = os.getenv("EASYPAISA_NUM",    "")
 JAZZCASH_NUM     = os.getenv("JAZZCASH_NUM",     "")
+DASHBOARD_PASS   = os.getenv("DASHBOARD_PASSWORD", "admin123")
+SECRET_KEY       = os.getenv("SECRET_KEY",        "invoiceflow-secret-2026")
 
 INVOICES_DIR = Path("./invoices")
 INVOICES_DIR.mkdir(exist_ok=True)
 DB_PATH = Path("./invoiceflow.db")
 
-genai.configure(api_key=GEMINI_API_KEY)
-gemini = genai.GenerativeModel("gemini-2.0-flash")
+groq_client = Groq(api_key=GROQ_API_KEY)
 
 app = Flask(__name__, static_folder="inv_static")
+app.secret_key = SECRET_KEY
 CORS(app)
+
+# ─────────────────────────────────────────────
+# AUTH
+# ─────────────────────────────────────────────
+def login_required(f):
+    @wraps(f)
+    def decorated(*args, **kwargs):
+        if not session.get("authenticated"):
+            if request.path.startswith("/api/"):
+                return jsonify({"error": "Unauthorized", "redirect": "/login"}), 401
+            return redirect("/login")
+        return f(*args, **kwargs)
+    return decorated
+
+@app.route("/login")
+def login_page():
+    return send_from_directory("inv_static", "login.html")
+
+@app.route("/api/auth/login", methods=["POST"])
+def do_login():
+    d = request.json
+    if d.get("password") == DASHBOARD_PASS:
+        session["authenticated"] = True
+        session.permanent = True
+        return jsonify({"ok": True})
+    return jsonify({"error": "Wrong password"}), 401
+
+@app.route("/api/auth/logout", methods=["POST"])
+def do_logout():
+    session.clear()
+    return jsonify({"ok": True})
+
+@app.route("/api/auth/check")
+def auth_check():
+    return jsonify({"authenticated": bool(session.get("authenticated"))})
 
 # ─────────────────────────────────────────────
 # DATABASE
@@ -68,92 +103,93 @@ def close_db(e=None):
 
 def init_db():
     with sqlite3.connect(DB_PATH) as db:
-        db.execute("""
-        CREATE TABLE IF NOT EXISTS clients (
-            id          INTEGER PRIMARY KEY AUTOINCREMENT,
-            name        TEXT NOT NULL,
-            email       TEXT NOT NULL UNIQUE,
-            phone       TEXT,
-            address     TEXT,
-            currency    TEXT DEFAULT 'PKR',
-            created_at  TEXT DEFAULT (datetime('now'))
-        )""")
-        db.execute("""
-        CREATE TABLE IF NOT EXISTS invoices (
-            id             INTEGER PRIMARY KEY AUTOINCREMENT,
+        db.execute("""CREATE TABLE IF NOT EXISTS clients (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            name TEXT NOT NULL, email TEXT NOT NULL UNIQUE,
+            phone TEXT, address TEXT, currency TEXT DEFAULT 'PKR',
+            created_at TEXT DEFAULT (datetime('now')))""")
+        db.execute("""CREATE TABLE IF NOT EXISTS invoices (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
             invoice_number TEXT UNIQUE NOT NULL,
-            client_id      INTEGER REFERENCES clients(id),
-            client_name    TEXT NOT NULL,
-            client_email   TEXT NOT NULL,
-            status         TEXT DEFAULT 'SENT',
-            currency       TEXT DEFAULT 'PKR',
-            subtotal       REAL NOT NULL,
-            tax_percent    REAL DEFAULT 0,
-            tax_amount     REAL DEFAULT 0,
-            total          REAL NOT NULL,
-            amount_paid    REAL DEFAULT 0,
-            due_date       TEXT,
-            invoice_date   TEXT,
-            notes          TEXT,
-            email_sent     INTEGER DEFAULT 0,
-            pdf_path       TEXT,
-            created_at     TEXT DEFAULT (datetime('now'))
-        )""")
-        db.execute("""
-        CREATE TABLE IF NOT EXISTS invoice_items (
-            id             INTEGER PRIMARY KEY AUTOINCREMENT,
-            invoice_id     INTEGER REFERENCES invoices(id),
-            description    TEXT NOT NULL,
-            qty            REAL DEFAULT 1,
-            unit_price     REAL NOT NULL,
-            amount         REAL NOT NULL
-        )""")
-        db.execute("""
-        CREATE TABLE IF NOT EXISTS invoice_counter (
-            year  INTEGER PRIMARY KEY,
-            count INTEGER DEFAULT 0
-        )""")
+            client_id INTEGER REFERENCES clients(id),
+            client_name TEXT NOT NULL, client_email TEXT NOT NULL,
+            status TEXT DEFAULT 'SENT', currency TEXT DEFAULT 'PKR',
+            subtotal REAL NOT NULL, tax_percent REAL DEFAULT 0,
+            tax_amount REAL DEFAULT 0, total REAL NOT NULL,
+            amount_paid REAL DEFAULT 0, due_date TEXT, invoice_date TEXT,
+            notes TEXT, email_sent INTEGER DEFAULT 0, pdf_path TEXT,
+            created_at TEXT DEFAULT (datetime('now')))""")
+        db.execute("""CREATE TABLE IF NOT EXISTS invoice_items (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            invoice_id INTEGER REFERENCES invoices(id),
+            description TEXT NOT NULL, qty REAL DEFAULT 1,
+            unit_price REAL NOT NULL, amount REAL NOT NULL)""")
+        db.execute("""CREATE TABLE IF NOT EXISTS invoice_counter (
+            year INTEGER PRIMARY KEY, count INTEGER DEFAULT 0)""")
         db.commit()
     log.info("Database initialized")
 
 # ─────────────────────────────────────────────
-# HELPERS
+# GROQ AI HELPERS
 # ─────────────────────────────────────────────
-def get_next_invoice_number():
-    year = datetime.datetime.now().year
-    with sqlite3.connect(DB_PATH) as db:
-        db.execute("INSERT INTO invoice_counter(year,count) VALUES(?,1) ON CONFLICT(year) DO UPDATE SET count=count+1", (year,))
-        db.commit()
-        row = db.execute("SELECT count FROM invoice_counter WHERE year=?", (year,)).fetchone()
-        return f"INV-{year}-{str(row[0]).zfill(3)}"
+def groq_chat(prompt, max_tokens=500):
+    response = groq_client.chat.completions.create(
+        model="llama-3.3-70b-versatile",
+        messages=[{"role": "user", "content": prompt}],
+        max_tokens=max_tokens,
+        temperature=0.7,
+    )
+    return response.choices[0].message.content.strip()
 
 def fmt(amount, currency="PKR"):
-    if currency == "USD":
-        return f"${amount:,.2f}"
-    return f"PKR {amount:,.0f}"
+    return f"${amount:,.2f}" if currency == "USD" else f"PKR {amount:,.0f}"
 
 def enhance_description(service, amount, currency):
     try:
-        r = gemini.generate_content(
+        return groq_chat(
             f'Write a professional 1-2 sentence invoice service description for: "{service}" '
-            f'(value: {fmt(amount, currency)}). Plain text only, max 120 chars, no price mention.'
+            f'worth {fmt(amount, currency)}. Plain text only, max 120 characters, do not mention the price.',
+            max_tokens=80
         )
-        return r.text.strip()
-    except:
+    except Exception as e:
+        log.error(f"Description enhancement failed: {e}")
         return service
 
 def generate_email_body(client_name, inv_num, service, total, due_date, biz_name, currency):
     try:
-        r = gemini.generate_content(
-            f'Write a short professional invoice email (3-4 sentences, plain text).\n'
-            f'Client: {client_name}, Invoice: {inv_num}, Service: {service}, '
-            f'Total: {fmt(total, currency)}, Due: {due_date}, From: {biz_name}.\n'
-            f'Warm but professional. Include greeting, what it is, amount, due date, closing.'
+        return groq_chat(f"""You are a professional business communication writer for {biz_name}.
+Write a formal yet warm invoice email. Plain text only. No markdown. No bullet points. No asterisks.
+
+Details:
+- Client Name: {client_name}
+- Invoice Number: {inv_num}
+- Service: {service}
+- Total Amount: {fmt(total, currency)}
+- Payment Due: {due_date}
+- Business: {biz_name}
+
+Structure (each paragraph separated by blank line):
+1. Warm greeting using client first name. Thank them for choosing {biz_name}.
+2. Confirm invoice {inv_num} has been issued for {service}. PDF is attached.
+3. State total {fmt(total, currency)} is due by {due_date}. Reference invoice number on payment.
+4. Invite them to reach out with any questions.
+5. Professional closing looking forward to working together again.
+
+Sign off: Warm regards, then blank line, then {biz_name}
+
+Rules: No "Please find attached". No "I hope this email finds you well". Sound human and confident. 8-10 lines total.""",
+            max_tokens=400
         )
-        return r.text.strip()
-    except:
-        return (f"Dear {client_name},\n\nPlease find attached invoice {inv_num} for {service}.\n"
-                f"Amount due: {fmt(total, currency)} by {due_date}.\n\nBest regards,\n{biz_name}")
+    except Exception as e:
+        log.error(f"Email generation failed: {e}")
+        return (
+            f"Dear {client_name},\n\n"
+            f"Thank you for choosing {biz_name} — it has been a pleasure working with you.\n\n"
+            f"Invoice {inv_num} has been issued for {service}. The PDF is attached for your records.\n\n"
+            f"Total amount due: {fmt(total, currency)} by {due_date}. Please use the invoice number as your payment reference.\n\n"
+            f"For any questions, feel free to reach out at {BUSINESS_EMAIL}.\n\n"
+            f"Warm regards,\n{biz_name}"
+        )
 
 # ─────────────────────────────────────────────
 # PDF GENERATOR
@@ -163,24 +199,20 @@ def generate_pdf(data):
     doc = SimpleDocTemplate(buf, pagesize=A4,
                             rightMargin=14*mm, leftMargin=14*mm,
                             topMargin=14*mm, bottomMargin=14*mm)
-
     ACCENT  = colors.HexColor('#1a1a2e')
     ACCENT2 = colors.HexColor('#5b4fff')
-    PINK    = colors.HexColor('#ff4f9e')
     LIGHT   = colors.HexColor('#f5f4ff')
     GRAY    = colors.HexColor('#ddddee')
     currency = data.get("currency", "PKR")
 
-    sN = ParagraphStyle('N',  fontName='Helvetica',      fontSize=9,  leading=14, textColor=colors.HexColor('#444'))
-    sS = ParagraphStyle('S',  fontName='Helvetica',      fontSize=8,  leading=12, textColor=colors.HexColor('#888'))
-    sB = ParagraphStyle('B',  fontName='Helvetica-Bold', fontSize=9,  leading=14, textColor=colors.HexColor('#222'))
-    sR = ParagraphStyle('R',  fontName='Helvetica',      fontSize=9,  leading=14, textColor=colors.HexColor('#444'), alignment=TA_RIGHT)
-    sL = ParagraphStyle('L',  fontName='Helvetica',      fontSize=7,  leading=11, textColor=colors.HexColor('#999'))
-    sC = ParagraphStyle('C',  fontName='Helvetica',      fontSize=8,  leading=12, textColor=colors.HexColor('#666'), alignment=TA_CENTER)
+    sN = ParagraphStyle('N', fontName='Helvetica',      fontSize=9,  leading=14, textColor=colors.HexColor('#444'))
+    sS = ParagraphStyle('S', fontName='Helvetica',      fontSize=8,  leading=12, textColor=colors.HexColor('#888'))
+    sB = ParagraphStyle('B', fontName='Helvetica-Bold', fontSize=9,  leading=14, textColor=colors.HexColor('#222'))
+    sL = ParagraphStyle('L', fontName='Helvetica',      fontSize=7,  leading=11, textColor=colors.HexColor('#999'))
+    sC = ParagraphStyle('C', fontName='Helvetica',      fontSize=8,  leading=12, textColor=colors.HexColor('#666'), alignment=TA_CENTER)
 
     story = []
 
-    # Header
     hdr = Table([[
         Paragraph(f'<font color="#1a1a2e"><b>{data["business_name"]}</b></font>',
                   ParagraphStyle('BN', fontName='Helvetica-Bold', fontSize=15, textColor=ACCENT)),
@@ -191,9 +223,8 @@ def generate_pdf(data):
     story.append(hdr)
     story.append(HRFlowable(width="100%", thickness=2, color=ACCENT2, spaceAfter=5))
 
-    # Biz info + meta
     biz_lines = [l for l in [data.get("business_email",""), data.get("business_phone",""),
-                               data.get("business_address",""), 
+                               data.get("business_address",""),
                                f'NTN: {data["business_ntn"]}' if data.get("business_ntn") else ""] if l]
     meta = Table([[
         Paragraph("<br/>".join(biz_lines), sS),
@@ -209,7 +240,6 @@ def generate_pdf(data):
     story.append(meta)
     story.append(Spacer(1, 8*mm))
 
-    # Bill To
     billhdr = Table([[Paragraph('BILL TO',
         ParagraphStyle('BL', fontName='Helvetica-Bold', fontSize=7, textColor=colors.white))
     ]], colWidths=[180*mm])
@@ -229,16 +259,10 @@ def generate_pdf(data):
     story.append(client_row)
     story.append(Spacer(1, 7*mm))
 
-    # Items table
     rows = [['#','Description','Qty','Unit Price','Amount']]
     for i, item in enumerate(data["items"], 1):
-        rows.append([
-            str(i),
-            Paragraph(item["description"], sN),
-            str(item.get("qty",1)),
-            fmt(item["unit_price"], currency),
-            fmt(item["amount"], currency),
-        ])
+        rows.append([str(i), Paragraph(item["description"], sN),
+                     str(item.get("qty",1)), fmt(item["unit_price"], currency), fmt(item["amount"], currency)])
     items_t = Table(rows, colWidths=[10*mm, 88*mm, 15*mm, 37*mm, 30*mm])
     items_t.setStyle(TableStyle([
         ('BACKGROUND',(0,0),(-1,0),ACCENT),('TEXTCOLOR',(0,0),(-1,0),colors.white),
@@ -257,7 +281,6 @@ def generate_pdf(data):
     story.append(items_t)
     story.append(Spacer(1,5*mm))
 
-    # Totals
     subtotal = sum(i["amount"] for i in data["items"])
     tax_pct  = data.get("tax_percent", 0)
     tax_amt  = subtotal * tax_pct / 100
@@ -267,7 +290,7 @@ def generate_pdf(data):
         tot_rows.append(['', f'GST ({tax_pct:.0f}%):', fmt(tax_amt, currency)])
     tot_rows.append(['', 'TOTAL DUE:', fmt(total, currency)])
     tot_t = Table(tot_rows, colWidths=[113*mm, 42*mm, 25*mm])
-    ts = TableStyle([
+    tot_t.setStyle(TableStyle([
         ('ALIGN',(1,0),(-1,-1),'RIGHT'),
         ('FONTNAME',(0,0),(-1,-2),'Helvetica'),('FONTSIZE',(0,0),(-1,-2),9),
         ('TEXTCOLOR',(1,0),(-1,-2),colors.HexColor('#666')),
@@ -275,12 +298,10 @@ def generate_pdf(data):
         ('FONTNAME',(1,-1),(-1,-1),'Helvetica-Bold'),('FONTSIZE',(1,-1),(-1,-1),13),
         ('TEXTCOLOR',(1,-1),(-1,-1),ACCENT2),
         ('LINEABOVE',(1,-1),(-1,-1),1.5,ACCENT2),('TOPPADDING',(1,-1),(-1,-1),8),
-    ])
-    tot_t.setStyle(ts)
+    ]))
     story.append(tot_t)
     story.append(Spacer(1, 8*mm))
 
-    # Payment info
     pay_lines = ['<b>Payment Methods:</b>']
     if data.get("easypaisa"): pay_lines.append(f'EasyPaisa: <b>{data["easypaisa"]}</b>')
     if data.get("jazzcash"):  pay_lines.append(f'JazzCash: <b>{data["jazzcash"]}</b>')
@@ -288,16 +309,12 @@ def generate_pdf(data):
     pay_text = ' &nbsp;|&nbsp; '.join(pay_lines)
 
     terms_data = [[
-        Paragraph(
-            f'<b>Payment Due by {data["due_date"]}</b><br/>'
-            f'Reference: <b>{data["invoice_number"]}</b><br/>'
-            + pay_text, sS),
-        Paragraph(
-            f'<b>Thank you for your business!</b><br/>'
-            f'{data["business_email"]}' +
-            (f'<br/>NTN: {data["business_ntn"]}' if data.get("business_ntn") else ""),
-            ParagraphStyle('TY', fontName='Helvetica', fontSize=8, leading=13,
-                           textColor=colors.HexColor('#888'), alignment=TA_RIGHT))
+        Paragraph(f'<b>Payment Due by {data["due_date"]}</b><br/>'
+                  f'Reference: <b>{data["invoice_number"]}</b><br/>' + pay_text, sS),
+        Paragraph(f'<b>Thank you for your business!</b><br/>{data["business_email"]}'
+                  + (f'<br/>NTN: {data["business_ntn"]}' if data.get("business_ntn") else ""),
+                  ParagraphStyle('TY', fontName='Helvetica', fontSize=8, leading=13,
+                                 textColor=colors.HexColor('#888'), alignment=TA_RIGHT))
     ]]
     terms_t = Table(terms_data, colWidths=[100*mm, 80*mm])
     terms_t.setStyle(TableStyle([
@@ -310,15 +327,11 @@ def generate_pdf(data):
     story.append(Spacer(1,6*mm))
     story.append(HRFlowable(width="100%", thickness=0.5, color=GRAY))
     story.append(Spacer(1,3*mm))
-
-    # Notes
     if data.get("notes"):
         story.append(Paragraph(f'<i>Note: {data["notes"]}</i>', sC))
         story.append(Spacer(1,3*mm))
-
     story.append(Paragraph(
         f'Generated by InvoiceFlow · {data["business_name"]} · {data["business_email"]}', sC))
-
     doc.build(story)
     return buf.getvalue()
 
@@ -348,17 +361,31 @@ def send_email(to_email, client_name, inv_num, body, pdf_bytes, biz_name):
         return False
 
 # ─────────────────────────────────────────────
-# API — CONFIG
+# HELPERS
+# ─────────────────────────────────────────────
+def get_next_invoice_number():
+    year = datetime.datetime.now().year
+    with sqlite3.connect(DB_PATH) as db:
+        db.execute("INSERT INTO invoice_counter(year,count) VALUES(?,1) ON CONFLICT(year) DO UPDATE SET count=count+1", (year,))
+        db.commit()
+        row = db.execute("SELECT count FROM invoice_counter WHERE year=?", (year,)).fetchone()
+        return f"INV-{year}-{str(row[0]).zfill(3)}"
+
+# ─────────────────────────────────────────────
+# ROUTES
 # ─────────────────────────────────────────────
 @app.route("/")
+@login_required
 def index():
     return send_from_directory("inv_static", "index.html")
 
 @app.route("/new")
+@login_required
 def new_invoice_page():
     return send_from_directory("inv_static", "invoice.html")
 
 @app.route("/api/config")
+@login_required
 def api_config():
     return jsonify({
         "business_name":    BUSINESS_NAME,
@@ -369,67 +396,89 @@ def api_config():
         "easypaisa":        EASYPAISA_NUM,
         "jazzcash":         JAZZCASH_NUM,
         "gmail_ok":         bool(GMAIL_USER and GMAIL_PASSWORD),
-        "gemini_ok":        bool(GEMINI_API_KEY),
+        "groq_ok":          bool(GROQ_API_KEY),
     })
 
-# ─────────────────────────────────────────────
-# API — CLIENTS
-# ─────────────────────────────────────────────
+# ── AI Enhance endpoint ──
+@app.route("/api/ai/enhance-description", methods=["POST"])
+@login_required
+def ai_enhance_description():
+    d = request.json
+    text     = d.get("text", "").strip()
+    amount   = float(d.get("amount", 0))
+    currency = d.get("currency", "PKR")
+    if not text:
+        return jsonify({"error": "No text provided"}), 400
+    try:
+        enhanced = groq_chat(
+            f"""You are a professional invoice writer.
+Rewrite this service description to sound polished and professional for an invoice:
+
+Original: "{text}"
+Value: {fmt(amount, currency)}
+
+Rules:
+- Plain text only, no bullet points, no markdown
+- 1-2 sentences maximum
+- Sound like a real professional service
+- Do not mention the price
+- Keep it concise and impressive
+- Max 150 characters""",
+            max_tokens=100
+        )
+        return jsonify({"enhanced": enhanced})
+    except Exception as e:
+        log.error(f"Enhance failed: {e}")
+        return jsonify({"error": str(e)}), 500
+
+# ── Clients ──
 @app.route("/api/clients", methods=["GET"])
+@login_required
 def list_clients():
     db = get_db()
     rows = db.execute("SELECT * FROM clients ORDER BY name").fetchall()
     return jsonify([dict(r) for r in rows])
 
 @app.route("/api/clients", methods=["POST"])
+@login_required
 def create_client():
-    d  = request.json
+    d = request.json
     db = get_db()
     try:
         db.execute("INSERT INTO clients(name,email,phone,address,currency) VALUES(?,?,?,?,?)",
                    (d["name"], d["email"], d.get("phone",""), d.get("address",""), d.get("currency","PKR")))
         db.commit()
-        row = db.execute("SELECT * FROM clients WHERE email=?", (d["email"],)).fetchone()
-        return jsonify(dict(row))
     except sqlite3.IntegrityError:
-        row = db.execute("SELECT * FROM clients WHERE email=?", (d["email"],)).fetchone()
-        return jsonify(dict(row))
+        pass
+    row = db.execute("SELECT * FROM clients WHERE email=?", (d["email"],)).fetchone()
+    return jsonify(dict(row))
 
 @app.route("/api/clients/search")
+@login_required
 def search_clients():
-    q  = request.args.get("q","")
+    q = request.args.get("q","")
     db = get_db()
     rows = db.execute("SELECT * FROM clients WHERE name LIKE ? OR email LIKE ? LIMIT 8",
                       (f"%{q}%", f"%{q}%")).fetchall()
     return jsonify([dict(r) for r in rows])
 
-@app.route("/api/clients/<int:cid>")
-def get_client(cid):
-    db  = get_db()
-    row = db.execute("SELECT * FROM clients WHERE id=?", (cid,)).fetchone()
-    if not row: return jsonify({"error":"Not found"}), 404
-    invs = db.execute(
-        "SELECT invoice_number, total, status, currency, invoice_date FROM invoices WHERE client_id=? ORDER BY created_at DESC LIMIT 10",
-        (cid,)).fetchall()
-    return jsonify({"client": dict(row), "invoices": [dict(i) for i in invs]})
-
-# ─────────────────────────────────────────────
-# API — INVOICES
-# ─────────────────────────────────────────────
+# ── Invoices ──
 @app.route("/api/invoices", methods=["GET"])
+@login_required
 def list_invoices():
-    db     = get_db()
+    db = get_db()
     status = request.args.get("status","")
     q      = request.args.get("q","")
     sql    = "SELECT * FROM invoices WHERE 1=1"
     params = []
-    if status: sql += " AND status=?";          params.append(status)
+    if status: sql += " AND status=?"; params.append(status)
     if q:      sql += " AND (client_name LIKE ? OR invoice_number LIKE ?)"; params += [f"%{q}%",f"%{q}%"]
-    sql   += " ORDER BY created_at DESC LIMIT 100"
-    rows   = db.execute(sql, params).fetchall()
+    sql += " ORDER BY created_at DESC LIMIT 100"
+    rows = db.execute(sql, params).fetchall()
     return jsonify([dict(r) for r in rows])
 
 @app.route("/api/invoices/<inv_num>")
+@login_required
 def get_invoice(inv_num):
     db  = get_db()
     inv = db.execute("SELECT * FROM invoices WHERE invoice_number=?", (inv_num,)).fetchone()
@@ -438,76 +487,60 @@ def get_invoice(inv_num):
     return jsonify({"invoice": dict(inv), "items": [dict(i) for i in items]})
 
 @app.route("/api/invoices/<inv_num>/status", methods=["PATCH"])
+@login_required
 def update_status(inv_num):
-    d      = request.json
-    status = d.get("status","")
-    paid   = float(d.get("amount_paid", 0))
-    db     = get_db()
+    d = request.json
+    db = get_db()
     db.execute("UPDATE invoices SET status=?, amount_paid=? WHERE invoice_number=?",
-               (status, paid, inv_num))
+               (d.get("status",""), float(d.get("amount_paid",0)), inv_num))
     db.commit()
     return jsonify({"ok": True})
 
 @app.route("/api/stats")
+@login_required
 def stats():
     db = get_db()
-    total_inv   = db.execute("SELECT COUNT(*) FROM invoices").fetchone()[0]
-    total_rev   = db.execute("SELECT COALESCE(SUM(total),0) FROM invoices WHERE currency='PKR'").fetchone()[0]
-    paid_rev    = db.execute("SELECT COALESCE(SUM(total),0) FROM invoices WHERE status='PAID' AND currency='PKR'").fetchone()[0]
-    pending     = db.execute("SELECT COUNT(*) FROM invoices WHERE status='SENT'").fetchone()[0]
-    overdue     = db.execute("SELECT COUNT(*) FROM invoices WHERE status='SENT' AND due_date < date('now')").fetchone()[0]
-    clients     = db.execute("SELECT COUNT(*) FROM clients").fetchone()[0]
-    usd_rev     = db.execute("SELECT COALESCE(SUM(total),0) FROM invoices WHERE currency='USD'").fetchone()[0]
-    monthly     = db.execute("""
-        SELECT strftime('%Y-%m', created_at) as month, SUM(total) as total
-        FROM invoices WHERE currency='PKR'
-        GROUP BY month ORDER BY month DESC LIMIT 6
-    """).fetchall()
     return jsonify({
-        "total_invoices": total_inv,
-        "total_revenue_pkr": total_rev,
-        "paid_revenue_pkr":  paid_rev,
-        "pending_invoices":  pending,
-        "overdue_invoices":  overdue,
-        "total_clients":     clients,
-        "total_revenue_usd": usd_rev,
-        "monthly": [dict(r) for r in monthly],
+        "total_invoices":    db.execute("SELECT COUNT(*) FROM invoices").fetchone()[0],
+        "total_revenue_pkr": db.execute("SELECT COALESCE(SUM(total),0) FROM invoices WHERE currency='PKR'").fetchone()[0],
+        "paid_revenue_pkr":  db.execute("SELECT COALESCE(SUM(total),0) FROM invoices WHERE status='PAID' AND currency='PKR'").fetchone()[0],
+        "pending_invoices":  db.execute("SELECT COUNT(*) FROM invoices WHERE status='SENT'").fetchone()[0],
+        "overdue_invoices":  db.execute("SELECT COUNT(*) FROM invoices WHERE status='SENT' AND due_date < date('now')").fetchone()[0],
+        "total_clients":     db.execute("SELECT COUNT(*) FROM clients").fetchone()[0],
+        "total_revenue_usd": db.execute("SELECT COALESCE(SUM(total),0) FROM invoices WHERE currency='USD'").fetchone()[0],
+        "monthly": [dict(r) for r in db.execute("""
+            SELECT strftime('%Y-%m', created_at) as month, SUM(total) as total
+            FROM invoices WHERE currency='PKR'
+            GROUP BY month ORDER BY month DESC LIMIT 6""").fetchall()],
     })
 
-# ─────────────────────────────────────────────
-# API — GENERATE INVOICE (main)
-# ─────────────────────────────────────────────
+# ── Generate Invoice ──
 @app.route("/api/generate-invoice", methods=["POST"])
+@login_required
 def generate_invoice():
     d = request.json
-    required = ["client_name","client_email","items"]
-    for f in required:
+    for f in ["client_name","client_email","items"]:
         if not d.get(f):
             return jsonify({"error": f"Missing: {f}"}), 400
-
     items = d["items"]
     if not items or not isinstance(items, list):
         return jsonify({"error": "items must be a non-empty list"}), 400
-
     try:
-        currency  = d.get("currency", "PKR")
-        tax_pct   = float(d.get("tax_percent", 0))
-        due_days  = int(d.get("due_days", 15))
-        today     = datetime.date.today()
-        due_date  = today + datetime.timedelta(days=due_days)
-        inv_num   = get_next_invoice_number()
-        db        = get_db()
+        currency = d.get("currency", "PKR")
+        tax_pct  = float(d.get("tax_percent", 0))
+        due_days = int(d.get("due_days", 15))
+        today    = datetime.date.today()
+        due_date = today + datetime.timedelta(days=due_days)
+        inv_num  = get_next_invoice_number()
+        db       = get_db()
 
-        # Upsert client
         db.execute("""INSERT INTO clients(name,email,phone,address,currency)
-                      VALUES(?,?,?,?,?)
-                      ON CONFLICT(email) DO UPDATE SET name=excluded.name""",
+                      VALUES(?,?,?,?,?) ON CONFLICT(email) DO UPDATE SET name=excluded.name""",
                    (d["client_name"], d["client_email"],
                     d.get("client_phone",""), d.get("client_address",""), currency))
         db.commit()
         client = db.execute("SELECT id FROM clients WHERE email=?", (d["client_email"],)).fetchone()
 
-        # Process items
         processed_items = []
         subtotal = 0
         for item in items:
@@ -515,18 +548,13 @@ def generate_invoice():
             unit_price = float(item["unit_price"])
             amount     = qty * unit_price
             subtotal  += amount
-            desc       = enhance_description(item["description"], amount, currency)
-            processed_items.append({
-                "description": desc,
-                "qty":         qty,
-                "unit_price":  unit_price,
-                "amount":      amount,
-            })
+            # Use AI-enhanced description if already enhanced, else enhance now
+            desc = item.get("enhanced_description") or enhance_description(item["description"], amount, currency)
+            processed_items.append({"description": desc, "qty": qty, "unit_price": unit_price, "amount": amount})
 
         tax_amount = subtotal * tax_pct / 100
         total      = subtotal + tax_amount
 
-        # Build PDF data
         pdf_data = {
             "invoice_number":   inv_num,
             "invoice_date":     today.strftime("%d %b %Y"),
@@ -550,7 +578,6 @@ def generate_invoice():
         pdf_path  = INVOICES_DIR / f"{inv_num}.pdf"
         pdf_path.write_bytes(pdf_bytes)
 
-        # Save to DB
         db.execute("""INSERT INTO invoices
             (invoice_number,client_id,client_name,client_email,currency,
              subtotal,tax_percent,tax_amount,total,due_date,invoice_date,notes,pdf_path)
@@ -560,18 +587,15 @@ def generate_invoice():
              due_date.strftime("%Y-%m-%d"), today.strftime("%Y-%m-%d"),
              d.get("notes",""), str(pdf_path)))
         inv_id = db.execute("SELECT id FROM invoices WHERE invoice_number=?", (inv_num,)).fetchone()["id"]
-
         for item in processed_items:
             db.execute("INSERT INTO invoice_items(invoice_id,description,qty,unit_price,amount) VALUES(?,?,?,?,?)",
                        (inv_id, item["description"], item["qty"], item["unit_price"], item["amount"]))
         db.commit()
 
-        # Email
         email_sent = False
         email_body = generate_email_body(d["client_name"], inv_num,
                        processed_items[0]["description"], total,
-                       due_date.strftime("%d %b %Y"),
-                       pdf_data["business_name"], currency)
+                       due_date.strftime("%d %b %Y"), pdf_data["business_name"], currency)
 
         if d.get("send_email", True) and GMAIL_USER and GMAIL_PASSWORD:
             email_sent = send_email(d["client_email"], d["client_name"],
@@ -581,17 +605,12 @@ def generate_invoice():
             db.commit()
 
         return jsonify({
-            "success":        True,
-            "invoice_number": inv_num,
-            "subtotal":       subtotal,
-            "tax_amount":     tax_amount,
-            "total":          total,
-            "currency":       currency,
-            "email_sent":     email_sent,
-            "email_preview":  email_body,
-            "pdf_url":        f"/invoices/{inv_num}.pdf",
+            "success": True, "invoice_number": inv_num,
+            "subtotal": subtotal, "tax_amount": tax_amount,
+            "total": total, "currency": currency,
+            "email_sent": email_sent, "email_preview": email_body,
+            "pdf_url": f"/invoices/{inv_num}.pdf",
         })
-
     except Exception as e:
         log.error(f"Invoice generation failed: {e}", exc_info=True)
         return jsonify({"error": str(e)}), 500
@@ -603,6 +622,7 @@ def sheets_webhook():
     return generate_invoice()
 
 @app.route("/invoices/<filename>")
+@login_required
 def serve_invoice(filename):
     return send_from_directory("invoices", filename)
 
@@ -611,7 +631,8 @@ def serve_invoice(filename):
 # ─────────────────────────────────────────────
 if __name__ == "__main__":
     init_db()
-    log.info(f"InvoiceFlow starting — Business: {BUSINESS_NAME}")
-    log.info(f"Gmail: {'OK' if GMAIL_USER else 'NOT SET'} | Gemini: {'OK' if GEMINI_API_KEY else 'NOT SET'}")
+    log.info(f"InvoiceFlow — Business: {BUSINESS_NAME}")
+    log.info(f"Gmail: {'OK' if GMAIL_USER else 'NOT SET'} | Groq: {'OK' if GROQ_API_KEY else 'NOT SET'}")
     print("\n  🚀 InvoiceFlow running at http://localhost:5001\n")
-    app.run(debug=False, port=5001)
+    port = int(os.environ.get("PORT", 5001))
+    app.run(debug=False, host="0.0.0.0", port=port)

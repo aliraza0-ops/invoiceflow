@@ -16,128 +16,133 @@
 *{margin:0;padding:0;box-sizing:border-box;}
 body{background:var(--bg);color:var(--text);font-family:'DM Mono',monospace;min-height:100vh;}
 
-header{height:56px;background:var(--s1);border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;padding:0 20px;position:sticky;top:0;z-index:10;}
+header{height:56px;background:var(--s1);border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;padding:0 32px;position:sticky;top:0;z-index:10;}
 .hdr-logo{font-family:'Fraunces',serif;font-size:18px;color:var(--gold2);cursor:pointer;}
 .hdr-back{font-size:11px;color:var(--text-dimmer);cursor:pointer;transition:color .15s;}
 .hdr-back:hover{color:var(--gold);}
 
-.page{max-width:900px;margin:0 auto;padding:28px 16px;display:grid;grid-template-columns:1fr 300px;gap:24px;align-items:start;}
+.page{max-width:900px;margin:0 auto;padding:40px 24px;display:grid;grid-template-columns:1fr 320px;gap:28px;align-items:start;}
 
-.card{background:var(--s1);border:1px solid var(--border);border-radius:16px;padding:24px;}
+/* FORM CARD */
+.card{background:var(--s1);border:1px solid var(--border);border-radius:16px;padding:28px;}
 .card-title{font-family:'Fraunces',serif;font-size:18px;color:var(--text);margin-bottom:24px;display:flex;align-items:center;gap:10px;}
 .card-title span{font-size:13px;font-family:'DM Mono',monospace;color:var(--text-dimmer);font-weight:300;}
 
-.form-section{margin-bottom:22px;}
-.form-section-label{font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--text-dimmer);margin-bottom:12px;display:flex;align-items:center;gap:8px;}
+/* SECTION DIVIDER */
+.form-section{margin-bottom:24px;}
+.form-section-label{font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--text-dimmer);margin-bottom:14px;display:flex;align-items:center;gap:8px;}
 .form-section-label::after{content:'';flex:1;height:1px;background:var(--border);}
 
-.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
+/* GRID */
+.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
 .fg-full{grid-column:1/-1;}
+
+/* INPUTS */
 .fg{display:flex;flex-direction:column;gap:6px;}
 label{font-size:9px;letter-spacing:1.5px;text-transform:uppercase;color:var(--text-dimmer);}
 input,textarea,select{
   background:var(--s2);border:1px solid var(--border);border-radius:8px;
-  padding:10px 12px;font-family:'DM Mono',monospace;font-size:13px;color:var(--text);
+  padding:10px 12px;font-family:'DM Mono',monospace;font-size:12px;color:var(--text);
   outline:none;transition:border-color .15s,box-shadow .15s;width:100%;
-  appearance: none;
-  -webkit-appearance:none;
 }
 input:focus,textarea:focus,select:focus{border-color:var(--gold);box-shadow:0 0 0 2px var(--gold-dim);}
 input::placeholder,textarea::placeholder{color:var(--text-dimmer);}
 textarea{resize:vertical;min-height:64px;line-height:1.6;}
 select option{background:var(--s2);}
 
+/* CLIENT AUTOCOMPLETE */
 .autocomplete-wrap{position:relative;}
-.autocomplete-list{position:absolute;top:100%;left:0;right:0;z-index:50;background:var(--s2);border:1px solid var(--border2);border-radius:8px;margin-top:4px;overflow:hidden;box-shadow:var(--shadow);display:none;}
+.autocomplete-list{
+  position:absolute;top:100%;left:0;right:0;z-index:50;
+  background:var(--s2);border:1px solid var(--border2);border-radius:8px;
+  margin-top:4px;overflow:hidden;box-shadow:var(--shadow);display:none;
+}
 .autocomplete-list.open{display:block;}
-.ac-item{padding:12px 14px;cursor:pointer;font-size:12px;transition:background .1s;border-bottom:1px solid var(--border);}
+.ac-item{padding:10px 14px;cursor:pointer;font-size:12px;transition:background .1s;border-bottom:1px solid var(--border);}
 .ac-item:last-child{border-bottom:none;}
-.ac-item:hover,.ac-item:active{background:var(--s3);}
+.ac-item:hover{background:var(--s3);}
 .ac-name{color:var(--text);}
 .ac-email{font-size:10px;color:var(--text-dimmer);}
 
+/* ITEMS */
 .items-list{display:flex;flex-direction:column;gap:10px;margin-bottom:12px;}
-.item-row{background:var(--s2);border:1px solid var(--border);border-radius:10px;padding:14px;}
+.item-row{background:var(--s2);border:1px solid var(--border);border-radius:10px;padding:14px;position:relative;}
 .item-grid{display:grid;grid-template-columns:1fr 60px 90px 28px;gap:8px;align-items:end;}
-.remove-item{background:none;border:none;color:var(--text-dimmer);cursor:pointer;font-size:18px;padding:0;line-height:1;transition:color .15s;touch-action:manipulation;}
-.remove-item:hover,.remove-item:active{color:var(--red);}
+.remove-item{background:none;border:none;color:var(--text-dimmer);cursor:pointer;font-size:16px;padding:0;line-height:1;transition:color .15s;}
+.remove-item:hover{color:var(--red);}
 .item-total{font-size:10px;color:var(--gold);text-align:right;margin-top:6px;}
-.add-item-btn{background:transparent;border:1px dashed var(--border2);color:var(--text-dimmer);padding:12px;border-radius:8px;font-family:'DM Mono',monospace;font-size:11px;cursor:pointer;width:100%;transition:all .15s;touch-action:manipulation;}
-.add-item-btn:hover,.add-item-btn:active{border-color:var(--gold);color:var(--gold);}
+.add-item-btn{background:transparent;border:1px dashed var(--border2);color:var(--text-dimmer);padding:10px;border-radius:8px;font-family:'DM Mono',monospace;font-size:11px;cursor:pointer;width:100%;transition:all .15s;}
+.add-item-btn:hover{border-color:var(--gold);color:var(--gold);}
+.ai-enhance-btn{background:var(--gold-dim);border:1px solid rgba(201,168,76,0.3);color:var(--gold2);padding:5px 10px;border-radius:6px;font-family:'DM Mono',monospace;font-size:10px;cursor:pointer;transition:all .15s;white-space:nowrap;letter-spacing:.3px;}
+.ai-enhance-btn:hover{background:rgba(201,168,76,0.2);border-color:var(--gold);}
+.ai-enhance-btn:disabled{opacity:.5;cursor:not-allowed;}
+.ai-enhance-btn.done{background:rgba(82,200,150,0.1);border-color:rgba(82,200,150,0.3);color:var(--green);}
+.desc-row{display:flex;gap:6px;align-items:flex-start;}
+.desc-row input{flex:1;}
+.enhanced-badge{font-size:9px;color:var(--green);letter-spacing:.5px;margin-top:4px;display:none;}
+.enhanced-badge.show{display:block;}
 
-.toggle-row{display:flex;align-items:center;justify-content:space-between;padding:12px 14px;background:var(--s2);border:1px solid var(--border);border-radius:8px;cursor:pointer;touch-action:manipulation;}
-.toggle-row label{cursor:pointer;font-size:13px;color:var(--text-dim);text-transform:none;letter-spacing:0;}
-.toggle{width:40px;height:22px;background:var(--border2);border-radius:11px;position:relative;transition:background .2s;flex-shrink:0;}
+/* TOGGLE */
+.toggle-row{display:flex;align-items:center;justify-content:space-between;padding:10px 12px;background:var(--s2);border:1px solid var(--border);border-radius:8px;cursor:pointer;}
+.toggle-row label{cursor:pointer;font-size:12px;color:var(--text-dim);text-transform:none;letter-spacing:0;}
+.toggle{width:36px;height:20px;background:var(--border2);border-radius:10px;position:relative;transition:background .2s;flex-shrink:0;}
 .toggle.on{background:var(--gold);}
-.toggle::after{content:'';position:absolute;width:16px;height:16px;background:white;border-radius:50%;top:3px;left:3px;transition:left .2s;box-shadow:0 1px 3px rgba(0,0,0,0.3);}
-.toggle.on::after{left:21px;}
+.toggle::after{content:'';position:absolute;width:14px;height:14px;background:white;border-radius:50%;top:3px;left:3px;transition:left .2s;box-shadow:0 1px 3px rgba(0,0,0,0.3);}
+.toggle.on::after{left:19px;}
 
-.submit-btn{width:100%;padding:16px;background:var(--gold);border:none;border-radius:10px;color:#0d0d0d;font-family:'Fraunces',serif;font-size:16px;font-weight:700;cursor:pointer;transition:all .2s;margin-top:8px;display:flex;align-items:center;justify-content:center;gap:10px;touch-action:manipulation;}
-.submit-btn:active{opacity:.85;}
-.submit-btn:disabled{opacity:.5;cursor:not-allowed;}
+/* SUBMIT */
+.submit-btn{width:100%;padding:14px;background:var(--gold);border:none;border-radius:10px;color:#0d0d0d;font-family:'Fraunces',serif;font-size:16px;font-weight:700;cursor:pointer;transition:all .2s;margin-top:8px;display:flex;align-items:center;justify-content:center;gap:10px;}
+.submit-btn:hover{background:var(--gold2);transform:translateY(-1px);}
+.submit-btn:disabled{opacity:.5;cursor:not-allowed;transform:none;}
 .spin{width:16px;height:16px;border:2px solid rgba(0,0,0,.3);border-top-color:#000;border-radius:50%;animation:spin .7s linear infinite;display:none;}
 @keyframes spin{to{transform:rotate(360deg)}}
 
-/* Preview sidebar */
+/* PREVIEW SIDEBAR */
 .preview-card{background:var(--s1);border:1px solid var(--border);border-radius:16px;overflow:hidden;position:sticky;top:76px;}
 .preview-hdr{background:var(--s2);padding:14px 18px;border-bottom:1px solid var(--border);font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--text-dimmer);}
-.preview-body{padding:16px;}
+.preview-body{padding:18px;}
 .prev-row{display:flex;justify-content:space-between;padding:7px 0;border-bottom:1px solid var(--border);font-size:11px;}
 .prev-row:last-child{border-bottom:none;}
-.prev-key{color:var(--text-dimmer);flex-shrink:0;margin-right:8px;}
-.prev-val{color:var(--text);text-align:right;font-size:11px;word-break:break-word;}
+.prev-key{color:var(--text-dimmer);}
+.prev-val{color:var(--text);text-align:right;max-width:160px;font-size:11px;}
 .prev-total{background:var(--gold-dim);border:1px solid rgba(201,168,76,0.2);border-radius:8px;padding:12px 14px;display:flex;justify-content:space-between;align-items:center;margin-top:10px;}
 .prev-total-label{font-size:10px;color:var(--text-dimmer);}
-.prev-total-val{font-family:'Fraunces',serif;font-size:20px;color:var(--gold2);}
+.prev-total-val{font-family:'Fraunces',serif;font-size:22px;color:var(--gold2);}
 
-/* Mobile preview toggle */
-.preview-toggle{display:none;width:100%;padding:12px;background:var(--s2);border:1px solid var(--border);border-radius:10px;color:var(--text-dim);font-family:'DM Mono',monospace;font-size:12px;cursor:pointer;margin-bottom:16px;text-align:center;}
-
-/* Success */
-.success-overlay{position:fixed;inset:0;background:rgba(0,0,0,.85);backdrop-filter:blur(8px);z-index:200;display:none;align-items:flex-end;justify-content:center;padding:0;}
+/* SUCCESS */
+.success-overlay{position:fixed;inset:0;background:rgba(0,0,0,.85);backdrop-filter:blur(8px);z-index:200;display:none;align-items:center;justify-content:center;}
 .success-overlay.open{display:flex;}
-.success-box{background:var(--s2);border:1px solid var(--border2);border-radius:20px 20px 0 0;padding:32px 24px;width:100%;max-width:500px;text-align:center;}
-.success-icon{font-size:40px;margin-bottom:12px;}
-.success-title{font-family:'Fraunces',serif;font-size:22px;color:var(--green);margin-bottom:6px;}
-.success-sub{font-size:12px;color:var(--text-dimmer);margin-bottom:16px;line-height:1.7;}
-.success-num{font-family:'Fraunces',serif;font-size:16px;color:var(--gold2);margin-bottom:16px;}
-.success-actions{display:flex;gap:10px;margin-bottom:10px;}
-.suc-btn{flex:1;padding:13px;border-radius:8px;font-family:'DM Mono',monospace;font-size:12px;cursor:pointer;border:none;transition:all .15s;touch-action:manipulation;}
+.success-box{background:var(--s2);border:1px solid var(--border2);border-radius:20px;padding:36px;width:400px;text-align:center;}
+.success-icon{font-size:48px;margin-bottom:16px;}
+.success-title{font-family:'Fraunces',serif;font-size:24px;color:var(--green);margin-bottom:8px;}
+.success-sub{font-size:12px;color:var(--text-dimmer);margin-bottom:20px;line-height:1.7;}
+.success-num{font-family:'Fraunces',serif;font-size:18px;color:var(--gold2);margin-bottom:20px;}
+.success-actions{display:flex;gap:10px;}
+.suc-btn{flex:1;padding:11px;border-radius:8px;font-family:'DM Mono',monospace;font-size:11px;cursor:pointer;border:none;transition:all .15s;}
 .suc-btn.primary{background:var(--gold);color:#0d0d0d;}
+.suc-btn.primary:hover{background:var(--gold2);}
 .suc-btn.secondary{background:var(--s3);border:1px solid var(--border2);color:var(--text-dim);}
-.email-prev{background:var(--s3);border:1px solid var(--border);border-radius:8px;padding:12px;font-size:10px;color:var(--text-dimmer);line-height:1.7;text-align:left;white-space:pre-wrap;margin:10px 0;max-height:80px;overflow-y:auto;}
+.suc-btn.secondary:hover{border-color:var(--gold);color:var(--gold);}
 
-.toast{position:fixed;bottom:20px;left:16px;right:16px;max-width:400px;margin:0 auto;padding:13px 18px;border-radius:10px;font-size:12px;z-index:999;animation:tIn .25s ease;text-align:center;}
+.email-prev{background:var(--s3);border:1px solid var(--border);border-radius:8px;padding:12px;font-size:10px;color:var(--text-dimmer);line-height:1.7;text-align:left;white-space:pre-wrap;margin:12px 0;max-height:100px;overflow-y:auto;}
+
+.toast{position:fixed;bottom:24px;right:24px;padding:12px 18px;border-radius:10px;font-size:12px;z-index:999;animation:tIn .25s ease;}
 .toast.ok{background:#0d2010;color:var(--green);border:1px solid rgba(82,200,150,.2);}
 .toast.err{background:#200d0d;color:var(--red);border:1px solid rgba(224,82,82,.2);}
-@keyframes tIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+@keyframes tIn{from{opacity:0;transform:translateX(16px)}to{opacity:1;transform:translateX(0)}}
 
-/* ── RESPONSIVE ── */
-@media(max-width:720px){
-  .page{grid-template-columns:1fr;padding:16px 12px;}
-  .preview-card{display:none;position:static;}
-  .preview-card.mobile-open{display:block;}
-  .preview-toggle{display:block;}
-  .form-grid{grid-template-columns:1fr 1fr;}
-  .success-overlay{align-items:flex-end;}
-}
-@media(max-width:480px){
-  .form-grid{grid-template-columns:1fr;}
-  .fg-full{grid-column:1;}
-  .item-grid{grid-template-columns:1fr 50px 80px 28px;}
-  header{padding:0 14px;}
-  .card{padding:18px 14px;}
-}
+@media(max-width:800px){.page{grid-template-columns:1fr;}.form-grid{grid-template-columns:1fr;}}
 </style>
 </head>
 <body>
 
 <header>
   <div class="hdr-logo" onclick="window.location='/'">InvoiceFlow</div>
-  <div class="hdr-back" onclick="window.location='/'">← Dashboard</div>
+  <div class="hdr-back" onclick="window.location='/'">← Back to Dashboard</div>
 </header>
 
 <div class="page">
+  <!-- FORM -->
   <div class="card">
     <div class="card-title">New Invoice <span>AI-powered</span></div>
 
@@ -147,7 +152,7 @@ select option{background:var(--s2);}
       <div class="form-grid">
         <div class="fg autocomplete-wrap fg-full">
           <label>Client Name</label>
-          <input id="clientName" placeholder="Search or add new client..." autocomplete="off" oninput="searchClients(this.value)"/>
+          <input id="clientName" placeholder="Start typing to search or add new..." autocomplete="off" oninput="searchClients(this.value)"/>
           <div class="autocomplete-list" id="acList"></div>
         </div>
         <div class="fg">
@@ -155,33 +160,34 @@ select option{background:var(--s2);}
           <input type="email" id="clientEmail" placeholder="client@email.com" oninput="updatePreview()"/>
         </div>
         <div class="fg">
-          <label>Phone (optional)</label>
+          <label>Client Phone (optional)</label>
           <input id="clientPhone" placeholder="+92-300-0000000"/>
         </div>
       </div>
     </div>
 
-    <!-- SETTINGS -->
+    <!-- INVOICE SETTINGS -->
     <div class="form-section">
       <div class="form-section-label">Invoice Settings</div>
       <div class="form-grid">
         <div class="fg">
           <label>Currency</label>
           <select id="currency" onchange="updatePreview()">
-            <option value="PKR">PKR — Rupee</option>
-            <option value="USD">USD — Dollar</option>
+            <option value="PKR">PKR — Pakistani Rupee</option>
+            <option value="USD">USD — US Dollar</option>
           </select>
         </div>
         <div class="fg">
           <label>Payment Due</label>
           <select id="dueDays" onchange="updatePreview()">
-            <option value="7">Net 7</option>
-            <option value="15" selected>Net 15</option>
-            <option value="30">Net 30</option>
-            <option value="45">Net 45</option>
-            <option value="60">Net 60</option>
+            <option value="7">Net 7 (7 days)</option>
+            <option value="15" selected>Net 15 (15 days)</option>
+            <option value="30">Net 30 (30 days)</option>
+            <option value="45">Net 45 (45 days)</option>
+            <option value="60">Net 60 (60 days)</option>
           </select>
         </div>
+        <!-- Tax toggle -->
         <div class="fg fg-full">
           <div class="toggle-row" onclick="toggleTax()">
             <label>Add GST 17%</label>
@@ -200,14 +206,14 @@ select option{background:var(--s2);}
 
     <!-- PAYMENT -->
     <div class="form-section">
-      <div class="form-section-label">Payment Info</div>
+      <div class="form-section-label">Payment Info (shown on invoice)</div>
       <div class="form-grid">
         <div class="fg">
-          <label>EasyPaisa</label>
+          <label>EasyPaisa Number</label>
           <input id="easypaisa" placeholder="03XX-XXXXXXX"/>
         </div>
         <div class="fg">
-          <label>JazzCash</label>
+          <label>JazzCash Number</label>
           <input id="jazzcash" placeholder="03XX-XXXXXXX"/>
         </div>
       </div>
@@ -216,16 +222,14 @@ select option{background:var(--s2);}
     <!-- NOTES -->
     <div class="form-section">
       <div class="form-section-label">Notes (optional)</div>
-      <textarea id="notes" placeholder="Any additional notes..."></textarea>
+      <textarea id="notes" placeholder="Any additional notes for this invoice..."></textarea>
     </div>
 
+    <!-- EMAIL TOGGLE -->
     <div class="toggle-row" onclick="toggleEmail()" style="margin-bottom:16px;">
-      <label>Send email to client</label>
+      <label>Send email to client automatically</label>
       <div class="toggle on" id="emailToggle"></div>
     </div>
-
-    <!-- Mobile preview toggle -->
-    <button class="preview-toggle" onclick="toggleMobilePreview()">👁 Show Preview</button>
 
     <button class="submit-btn" id="submitBtn" onclick="submit()">
       <div class="spin" id="spin"></div>
@@ -233,8 +237,8 @@ select option{background:var(--s2);}
     </button>
   </div>
 
-  <!-- PREVIEW -->
-  <div class="preview-card" id="previewCard">
+  <!-- PREVIEW SIDEBAR -->
+  <div class="preview-card">
     <div class="preview-hdr">Live Preview</div>
     <div class="preview-body">
       <div class="prev-row"><div class="prev-key">Client</div><div class="prev-val" id="pClient">—</div></div>
@@ -250,58 +254,70 @@ select option{background:var(--s2);}
   </div>
 </div>
 
-<!-- SUCCESS -->
+<!-- SUCCESS OVERLAY -->
 <div class="success-overlay" id="successOverlay">
   <div class="success-box">
     <div class="success-icon">✅</div>
     <div class="success-title">Invoice Sent!</div>
     <div class="success-num" id="sucNum">INV-2026-001</div>
-    <div class="success-sub" id="sucSub">Invoice generated and emailed.</div>
+    <div class="success-sub" id="sucSub">Invoice generated and emailed to client.</div>
     <div class="email-prev" id="sucEmailPrev"></div>
     <div class="success-actions">
       <button class="suc-btn secondary" onclick="window.location='/'">Dashboard</button>
       <button class="suc-btn primary" onclick="dlPdf()">⬇ Download PDF</button>
     </div>
-    <button class="suc-btn secondary" style="width:100%;margin-top:6px;" onclick="resetForm()">+ New Invoice</button>
+    <button class="suc-btn secondary" style="width:100%;margin-top:8px;" onclick="resetForm()">+ New Invoice</button>
   </div>
 </div>
 
 <script>
-let taxEnabled=false,emailEnabled=true,config={},currentPdf=null,items=[],itemId=0,previewOpen=false;
+let taxEnabled   = false;
+let emailEnabled = true;
+let config       = {};
+let currentPdf   = null;
+let items        = [];
+let itemId       = 0;
 
-async function init(){
-  config=await fetch('/api/config').then(r=>r.json());
-  if(config.easypaisa)document.getElementById('easypaisa').value=config.easypaisa;
-  if(config.jazzcash)document.getElementById('jazzcash').value=config.jazzcash;
-  addItem();
+async function init() {
+  config = await fetch('/api/config').then(r=>r.json());
+  if (config.easypaisa) document.getElementById('easypaisa').value = config.easypaisa;
+  if (config.jazzcash)  document.getElementById('jazzcash').value  = config.jazzcash;
+  addItem(); // start with one item
 }
 
-function addItem(){
-  const id=++itemId;
-  items.push({id,desc:'',qty:1,price:0});
+// ── Items ──
+function addItem() {
+  const id = ++itemId;
+  items.push({ id, desc:'', qty:1, price:0 });
   renderItems();
 }
 
-function removeItem(id){
-  if(items.length<=1)return;
-  items=items.filter(i=>i.id!==id);
+function removeItem(id) {
+  if (items.length <= 1) return;
+  items = items.filter(i=>i.id!==id);
   renderItems();
 }
 
-function renderItems(){
-  document.getElementById('itemsList').innerHTML=items.map(item=>`
+function renderItems() {
+  document.getElementById('itemsList').innerHTML = items.map(item => `
     <div class="item-row" id="item-${item.id}">
       <div class="item-grid">
         <div class="fg">
           <label>Description</label>
-          <input value="${item.desc}" placeholder="Service..." oninput="updateItem(${item.id},'desc',this.value)"/>
+          <div class="desc-row">
+            <input id="desc-${item.id}" value="${item.enhanced||item.desc}" placeholder="Service or product..." oninput="updateItem(${item.id},'desc',this.value)"/>
+            <button class="ai-enhance-btn ${item.enhanced?'done':''}" id="aibtn-${item.id}" onclick="enhanceItem(${item.id})" title="Enhance with AI">
+              ${item.enhanced?'✓ AI':'✦ AI'}
+            </button>
+          </div>
+          <div class="enhanced-badge ${item.enhanced?'show':''}" id="badge-${item.id}">✦ Enhanced by AI</div>
         </div>
         <div class="fg">
           <label>Qty</label>
           <input type="number" value="${item.qty}" min="1" oninput="updateItem(${item.id},'qty',this.value)"/>
         </div>
         <div class="fg">
-          <label>Price</label>
+          <label>Unit Price</label>
           <input type="number" value="${item.price||''}" placeholder="0" oninput="updateItem(${item.id},'price',this.value)"/>
         </div>
         <button class="remove-item" onclick="removeItem(${item.id})">✕</button>
@@ -310,129 +326,191 @@ function renderItems(){
     </div>`).join('');
 }
 
-function updateItem(id,field,val){
-  const item=items.find(i=>i.id===id);
-  if(!item)return;
-  if(field==='qty')item.qty=parseFloat(val)||1;
-  if(field==='price')item.price=parseFloat(val)||0;
-  if(field==='desc')item.desc=val;
-  const el=document.getElementById(`itotal-${id}`);
-  if(el)el.textContent=fmtAmt(item.qty*item.price);
+async function enhanceItem(id) {
+  const item = items.find(i=>i.id===id);
+  if (!item || !item.desc) return toast('Type a description first','err');
+  const btn = document.getElementById(`aibtn-${id}`);
+  btn.disabled = true;
+  btn.textContent = '...';
+  try {
+    const res = await fetch('/api/ai/enhance-description', {
+      method:'POST', headers:{'Content-Type':'application/json'},
+      body: JSON.stringify({
+        text: item.desc,
+        amount: item.qty * item.price,
+        currency: document.getElementById('currency').value
+      })
+    });
+    const data = await res.json();
+    if (data.error) throw new Error(data.error);
+    item.enhanced = data.enhanced;
+    document.getElementById(`desc-${id}`).value = data.enhanced;
+    btn.textContent = '✓ AI';
+    btn.classList.add('done');
+    btn.disabled = false;
+    document.getElementById(`badge-${id}`).classList.add('show');
+    updatePreview();
+  } catch(e) {
+    toast('AI failed: '+e.message,'err');
+    btn.textContent = '✦ AI';
+    btn.disabled = false;
+  }
+}
+
+function updateItem(id, field, val) {
+  const item = items.find(i=>i.id===id);
+  if (!item) return;
+  if (field==='qty')   item.qty   = parseFloat(val)||1;
+  if (field==='price') item.price = parseFloat(val)||0;
+  if (field==='desc')  item.desc  = val;
+  const el = document.getElementById(`itotal-${id}`);
+  if (el) el.textContent = fmtAmt(item.qty * item.price);
   updatePreview();
 }
 
-function toggleTax(){taxEnabled=!taxEnabled;document.getElementById('taxToggle').classList.toggle('on',taxEnabled);document.getElementById('pTaxRow').style.display=taxEnabled?'flex':'none';updatePreview();}
-function toggleEmail(){emailEnabled=!emailEnabled;document.getElementById('emailToggle').classList.toggle('on',emailEnabled);}
-function toggleMobilePreview(){
-  previewOpen=!previewOpen;
-  document.getElementById('previewCard').classList.toggle('mobile-open',previewOpen);
-  document.querySelector('.preview-toggle').textContent=previewOpen?'👁 Hide Preview':'👁 Show Preview';
+// ── Toggles ──
+function toggleTax() {
+  taxEnabled = !taxEnabled;
+  document.getElementById('taxToggle').classList.toggle('on', taxEnabled);
+  document.getElementById('pTaxRow').style.display = taxEnabled ? 'flex' : 'none';
+  updatePreview();
+}
+function toggleEmail() {
+  emailEnabled = !emailEnabled;
+  document.getElementById('emailToggle').classList.toggle('on', emailEnabled);
 }
 
-function updatePreview(){
-  const name=document.getElementById('clientName').value;
-  const currency=document.getElementById('currency').value;
-  const due=document.getElementById('dueDays').value;
-  const subtotal=items.reduce((s,i)=>s+i.qty*i.price,0);
-  const tax=taxEnabled?subtotal*.17:0;
-  const total=subtotal+tax;
-  document.getElementById('pClient').textContent=name||'—';
-  document.getElementById('pItems').textContent=items.filter(i=>i.desc).map(i=>i.desc.slice(0,18)+'…').join(', ')||'—';
-  document.getElementById('pCurrency').textContent=currency;
-  document.getElementById('pDue').textContent=`${due} days`;
-  document.getElementById('pTax').textContent=fmtAmt(tax);
-  document.getElementById('pTotal').textContent=currency==='USD'?`$${total.toFixed(2)}`:`PKR ${total.toLocaleString('en',{maximumFractionDigits:0})}`;
+// ── Preview ──
+function updatePreview() {
+  const name     = document.getElementById('clientName').value;
+  const currency = document.getElementById('currency').value;
+  const due      = document.getElementById('dueDays').value;
+  const subtotal = items.reduce((s,i) => s + i.qty*i.price, 0);
+  const tax      = taxEnabled ? subtotal*.17 : 0;
+  const total    = subtotal + tax;
+
+  document.getElementById('pClient').textContent   = name || '—';
+  document.getElementById('pItems').textContent    = items.filter(i=>i.desc).map(i=>i.desc.slice(0,20)+'…').join(', ') || '—';
+  document.getElementById('pCurrency').textContent = currency;
+  document.getElementById('pDue').textContent      = `${due} days`;
+  document.getElementById('pTax').textContent      = fmtAmt(tax);
+  document.getElementById('pTotal').textContent    = currency==='USD' ? `$${total.toFixed(2)}` : `PKR ${total.toLocaleString('en',{maximumFractionDigits:0})}`;
 }
 
+// ── Client autocomplete ──
 let acTimeout;
-async function searchClients(q){
+async function searchClients(q) {
   updatePreview();
   clearTimeout(acTimeout);
-  if(!q||q.length<2){closeAc();return;}
-  acTimeout=setTimeout(async()=>{
-    const rows=await fetch(`/api/clients/search?q=${encodeURIComponent(q)}`).then(r=>r.json());
-    const list=document.getElementById('acList');
-    if(!rows.length){closeAc();return;}
-    list.innerHTML=rows.map(c=>`
+  if (!q || q.length < 2) { closeAc(); return; }
+  acTimeout = setTimeout(async () => {
+    const rows = await fetch(`/api/clients/search?q=${encodeURIComponent(q)}`).then(r=>r.json());
+    const list = document.getElementById('acList');
+    if (!rows.length) { closeAc(); return; }
+    list.innerHTML = rows.map(c => `
       <div class="ac-item" onclick="selectClient(${JSON.stringify(c).replace(/"/g,'&quot;')})">
         <div class="ac-name">${c.name}</div>
         <div class="ac-email">${c.email}</div>
       </div>`).join('');
     list.classList.add('open');
-  },250);
+  }, 250);
 }
 
-function selectClient(c){
-  document.getElementById('clientName').value=c.name;
-  document.getElementById('clientEmail').value=c.email;
-  if(c.phone)document.getElementById('clientPhone').value=c.phone;
-  if(c.currency)document.getElementById('currency').value=c.currency;
-  closeAc();updatePreview();
+function selectClient(c) {
+  document.getElementById('clientName').value  = c.name;
+  document.getElementById('clientEmail').value = c.email;
+  if (c.phone) document.getElementById('clientPhone').value = c.phone;
+  if (c.currency) document.getElementById('currency').value = c.currency;
+  closeAc();
+  updatePreview();
 }
-function closeAc(){document.getElementById('acList').classList.remove('open');}
-document.addEventListener('click',e=>{if(!e.target.closest('.autocomplete-wrap'))closeAc();});
+function closeAc() { document.getElementById('acList').classList.remove('open'); }
+document.addEventListener('click', e => { if (!e.target.closest('.autocomplete-wrap')) closeAc(); });
 
-async function submit(){
-  const name=document.getElementById('clientName').value.trim();
-  const email=document.getElementById('clientEmail').value.trim();
-  if(!name)return toast('Enter client name','err');
-  if(!email)return toast('Enter client email','err');
-  const validItems=items.filter(i=>i.desc&&i.price>0);
-  if(!validItems.length)return toast('Add at least one item with description and price','err');
+// ── Submit ──
+async function submit() {
+  const name  = document.getElementById('clientName').value.trim();
+  const email = document.getElementById('clientEmail').value.trim();
+  if (!name)  return toast('Enter client name', 'err');
+  if (!email) return toast('Enter client email', 'err');
+  const validItems = items.filter(i => i.desc && i.price > 0);
+  if (!validItems.length) return toast('Add at least one item with description and price', 'err');
+
   setLoading(true);
-  try{
-    const res=await fetch('/api/generate-invoice',{
-      method:'POST',headers:{'Content-Type':'application/json'},
-      body:JSON.stringify({
-        client_name:name,client_email:email,
-        client_phone:document.getElementById('clientPhone').value,
-        currency:document.getElementById('currency').value,
-        due_days:parseInt(document.getElementById('dueDays').value),
-        tax_percent:taxEnabled?17:0,
-        easypaisa:document.getElementById('easypaisa').value,
-        jazzcash:document.getElementById('jazzcash').value,
-        notes:document.getElementById('notes').value,
-        send_email:emailEnabled,
-        items:validItems.map(i=>({description:i.desc,qty:i.qty,unit_price:i.price})),
+  try {
+    const res = await fetch('/api/generate-invoice', {
+      method: 'POST',
+      headers: {'Content-Type':'application/json'},
+      body: JSON.stringify({
+        client_name:    name,
+        client_email:   email,
+        client_phone:   document.getElementById('clientPhone').value,
+        currency:       document.getElementById('currency').value,
+        due_days:       parseInt(document.getElementById('dueDays').value),
+        tax_percent:    taxEnabled ? 17 : 0,
+        easypaisa:      document.getElementById('easypaisa').value,
+        jazzcash:       document.getElementById('jazzcash').value,
+        notes:          document.getElementById('notes').value,
+        send_email:     emailEnabled,
+        items: validItems.map(i => ({
+          description: i.desc,
+          enhanced_description: i.enhanced || null,
+          qty: i.qty,
+          unit_price: i.price,
+        })),
       })
     });
-    const data=await res.json();
-    if(data.error)throw new Error(data.error);
-    currentPdf=data.pdf_url;
-    document.getElementById('sucNum').textContent=data.invoice_number;
-    document.getElementById('sucSub').textContent=data.email_sent?`Emailed to ${email}`:'PDF generated (email not sent)';
-    document.getElementById('sucEmailPrev').textContent=data.email_preview;
+    const data = await res.json();
+    if (data.error) throw new Error(data.error);
+
+    currentPdf = data.pdf_url;
+    document.getElementById('sucNum').textContent      = data.invoice_number;
+    document.getElementById('sucSub').textContent      =
+      data.email_sent ? `Emailed to ${email}` : 'PDF generated (email not sent)';
+    document.getElementById('sucEmailPrev').textContent = data.email_preview;
     document.getElementById('successOverlay').classList.add('open');
-  }catch(e){toast('Error: '+e.message,'err');}
+
+  } catch(e) {
+    toast('Error: ' + e.message, 'err');
+  }
   setLoading(false);
 }
 
-function dlPdf(){if(currentPdf)window.open(currentPdf,'_blank');}
+function dlPdf() { if (currentPdf) window.open(currentPdf,'_blank'); }
 
-function resetForm(){
+function resetForm() {
   document.getElementById('successOverlay').classList.remove('open');
-  ['clientName','clientEmail','clientPhone','notes'].forEach(id=>document.getElementById(id).value='');
-  taxEnabled=false;emailEnabled=true;
+  document.getElementById('clientName').value  = '';
+  document.getElementById('clientEmail').value = '';
+  document.getElementById('clientPhone').value = '';
+  document.getElementById('notes').value       = '';
+  taxEnabled   = false;
+  emailEnabled = true;
   document.getElementById('taxToggle').classList.remove('on');
   document.getElementById('emailToggle').classList.add('on');
-  items=[];itemId=0;addItem();updatePreview();
+  items  = [];
+  itemId = 0;
+  addItem();
+  updatePreview();
 }
 
-function setLoading(s){
-  document.getElementById('submitBtn').disabled=s;
-  document.getElementById('spin').style.display=s?'block':'none';
-  document.getElementById('btnTxt').textContent=s?'Generating...':'Generate & Send Invoice';
+function setLoading(s) {
+  document.getElementById('submitBtn').disabled = s;
+  document.getElementById('spin').style.display = s ? 'block' : 'none';
+  document.getElementById('btnTxt').textContent = s ? 'Generating...' : 'Generate & Send Invoice';
 }
 
-function fmtAmt(n){
-  const cur=document.getElementById('currency')?.value||'PKR';
-  if(!n)return cur==='USD'?'$0.00':'PKR 0';
-  return cur==='USD'?`$${n.toFixed(2)}`:`PKR ${n.toLocaleString('en',{maximumFractionDigits:0})}`;
+function fmtAmt(n) {
+  const cur = document.getElementById('currency')?.value || 'PKR';
+  if (!n) return cur==='USD' ? '$0.00' : 'PKR 0';
+  return cur==='USD' ? `$${n.toFixed(2)}` : `PKR ${n.toLocaleString('en',{maximumFractionDigits:0})}`;
 }
 
-function toast(msg,type){
-  const t=document.createElement('div');t.className=`toast ${type}`;t.textContent=msg;
-  document.body.appendChild(t);setTimeout(()=>t.remove(),3500);
+function toast(msg, type) {
+  const t = document.createElement('div');
+  t.className = `toast ${type}`; t.textContent = msg;
+  document.body.appendChild(t);
+  setTimeout(()=>t.remove(), 3500);
 }
 
 init();

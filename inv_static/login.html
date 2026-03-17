@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>InvoiceFlow — Login</title>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@300;600;700&family=DM+Mono:wght@300;400&display=swap" rel="stylesheet"/>
+<style>
+:root{--bg:#0d0d0d;--s1:#141414;--s2:#1c1c1c;--border:#2a2a2a;--gold:#c9a84c;--gold2:#e8c97a;--gold-dim:rgba(201,168,76,0.12);--green:#52c896;--red:#e05252;--text:#e8e8e0;--text-dim:#888;--text-dimmer:#444;}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{background:var(--bg);color:var(--text);font-family:'DM Mono',monospace;min-height:100vh;display:flex;align-items:center;justify-content:center;}
+body::before{content:'';position:fixed;top:-30%;left:-20%;width:70vw;height:70vh;background:radial-gradient(ellipse,rgba(201,168,76,0.05) 0%,transparent 70%);pointer-events:none;}
+
+.box{background:var(--s1);border:1px solid var(--border);border-radius:20px;padding:48px 40px;width:100%;max-width:380px;text-align:center;}
+.logo{font-family:'Fraunces',serif;font-size:32px;color:var(--gold2);font-weight:700;margin-bottom:6px;}
+.logo-sub{font-size:9px;letter-spacing:3px;text-transform:uppercase;color:var(--text-dimmer);margin-bottom:36px;}
+
+.input-wrap{position:relative;margin-bottom:14px;}
+.input-wrap input{width:100%;background:var(--s2);border:1.5px solid var(--border);border-radius:10px;padding:14px 16px 14px 44px;font-family:'DM Mono',monospace;font-size:13px;color:var(--text);outline:none;transition:border-color .2s;}
+.input-wrap input:focus{border-color:var(--gold);}
+.input-wrap input::placeholder{color:var(--text-dimmer);}
+.input-icon{position:absolute;left:14px;top:50%;transform:translateY(-50%);font-size:16px;pointer-events:none;}
+
+.btn{width:100%;padding:14px;background:var(--gold);border:none;border-radius:10px;color:#0d0d0d;font-family:'Fraunces',serif;font-size:16px;font-weight:700;cursor:pointer;transition:all .2s;margin-top:6px;display:flex;align-items:center;justify-content:center;gap:8px;}
+.btn:hover{background:var(--gold2);transform:translateY(-1px);}
+.btn:active{transform:translateY(0);}
+.btn:disabled{opacity:.5;cursor:not-allowed;transform:none;}
+.spin{width:16px;height:16px;border:2px solid rgba(0,0,0,.3);border-top-color:#000;border-radius:50%;animation:spin .7s linear infinite;display:none;}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+.error{background:rgba(224,82,82,.1);border:1px solid rgba(224,82,82,.2);color:var(--red);border-radius:8px;padding:10px 14px;font-size:12px;margin-top:12px;display:none;}
+.error.show{display:block;}
+
+.hint{font-size:10px;color:var(--text-dimmer);margin-top:20px;line-height:1.7;}
+</style>
+</head>
+<body>
+<div class="box">
+  <div class="logo">InvoiceFlow</div>
+  <div class="logo-sub">Secure Access</div>
+
+  <div class="input-wrap">
+    <span class="input-icon">🔑</span>
+    <input type="password" id="password" placeholder="Enter dashboard password"
+           onkeydown="if(event.key==='Enter')login()"/>
+  </div>
+
+  <button class="btn" id="loginBtn" onclick="login()">
+    <div class="spin" id="spin"></div>
+    <span id="btnTxt">Enter Dashboard</span>
+  </button>
+
+  <div class="error" id="error">Wrong password. Try again.</div>
+  <div class="hint">Protected by InvoiceFlow Auth<br/>Set password in your .env file</div>
+</div>
+
+<script>
+async function login() {
+  const pwd = document.getElementById('password').value;
+  if (!pwd) return;
+  document.getElementById('loginBtn').disabled = true;
+  document.getElementById('spin').style.display = 'block';
+  document.getElementById('btnTxt').textContent = 'Verifying...';
+  document.getElementById('error').classList.remove('show');
+
+  const res  = await fetch('/api/auth/login', {
+    method: 'POST',
+    headers: {'Content-Type':'application/json'},
+    body: JSON.stringify({password: pwd})
+  });
+  const data = await res.json();
+
+  if (data.ok) {
+    window.location.href = '/';
+  } else {
+    document.getElementById('error').classList.add('show');
+    document.getElementById('loginBtn').disabled = false;
+    document.getElementById('spin').style.display = 'none';
+    document.getElementById('btnTxt').textContent = 'Enter Dashboard';
+    document.getElementById('password').value = '';
+    document.getElementById('password').focus();
+  }
+}
+document.getElementById('password').focus();
+</script>
+</body>
+</html>

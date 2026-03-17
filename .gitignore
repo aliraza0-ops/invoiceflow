@@ -3,7 +3,9 @@ venv/
 __pycache__/
 *.pyc
 invoiceflow.db
-invoices/
-invoiceflow.log
-chroma_db/
 invoice_counter.json
+invoiceflow.log
+invoices/
+chroma_db/
+*.db
+*.log
