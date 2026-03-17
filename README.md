@@ -128,4 +128,4 @@ MIT — free to use, modify, and distribute.
 
 ---
 
-Built by [@aliraza0-ops](https://github.com/aliraza0-ops)
+Built by [@aliraza0-ops](https://github.com/aliraza0-ops) --Linkedin [ www.linkedin.com/in/ali-raza-9816213a4 ]
